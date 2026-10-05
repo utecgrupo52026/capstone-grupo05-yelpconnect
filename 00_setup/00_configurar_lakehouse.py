@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # 00 · Configuración del Lakehouse del grupo
 # MAGIC **Ejecutar UNA sola vez por grupo** (es idempotente: re-ejecutarlo no rompe nada).
@@ -12,7 +16,7 @@
 
 # COMMAND ----------
 
-dbutils.widgets.text("grupo", "00", "Número de grupo")
+dbutils.widgets.text("grupo", "05", "Número de grupo")
 GRUPO = dbutils.widgets.get("grupo")
 CATALOGO = "workspace"  # catálogo por defecto de Free Edition
 print(f"Configurando lakehouse del Grupo {GRUPO} en el catálogo '{CATALOGO}'")

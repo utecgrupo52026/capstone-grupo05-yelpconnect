@@ -72,14 +72,14 @@ print(f"✔ Glosario válido: {n} términos · {sin_dominio} dominios · "
 # COMMAND ----------
 
 # DBTITLE 1: Conflictos semánticos del caso — verificación explícita
-# MAGIC %sql
-# MAGIC -- Los tres conflictos del enunciado deben estar resueltos con un término propio
-# MAGIC SELECT termino, dominio_datos, propietario
-# MAGIC FROM workspace.yelp_gov.glosario_negocio
-# MAGIC WHERE lower(termino) LIKE '%verificada%'      -- Marketing ↔ Trust & Safety
-# MAGIC    OR lower(termino) LIKE '%check-in válido%' -- Operaciones Comerciales
-# MAGIC    OR lower(termino) LIKE '%duplicada%'       -- Marketing
-# MAGIC ORDER BY termino;
+%sql
+-- Los tres conflictos del enunciado deben estar resueltos con un término propio
+SELECT termino, dominio_datos, propietario
+FROM workspace.yelp_gov.glosario_negocio
+WHERE lower(termino) LIKE '%verificada%'      -- Marketing ↔ Trust & Safety
+   OR lower(termino) LIKE '%check-in válido%' -- Operaciones Comerciales
+   OR lower(termino) LIKE '%duplicada%'       -- Marketing
+ORDER BY termino;
 
 # COMMAND ----------
 

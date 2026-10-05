@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # 01 · Verificación de datos crudos
 # MAGIC Valida que los 5 archivos del Yelp Open Dataset (muestreados) estén en el Volume
@@ -31,3 +35,12 @@ for e in ESPERADOS:
 # MAGIC > ✏️ **TODO (grupo):** anotar aquí en markdown 3 observaciones sobre los datos crudos
 # MAGIC > (campos anidados, tipos sospechosos, posibles problemas de calidad). Estas
 # MAGIC > observaciones alimentan E3 (modelado) y E5 (reglas de calidad).
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ** Observión 01 **
+# MAGIC
+# MAGIC ** Observión 02 **
+# MAGIC
+# MAGIC ** Observión 03 **
