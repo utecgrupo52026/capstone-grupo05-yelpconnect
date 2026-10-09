@@ -17,21 +17,21 @@
 # COMMAND ----------
 
 # DBTITLE 1: Ejemplo resuelto — gld_kpi_negocio_mensual
-# MAGIC %sql
-# MAGIC CREATE OR REPLACE TABLE workspace.yelp_gold.gld_kpi_negocio_mensual
-# MAGIC COMMENT 'KPIs mensuales por negocio para Producto. Fuente: slv_review + slv_business.'
-# MAGIC AS
-# MAGIC SELECT
-# MAGIC   b.business_id,
-# MAGIC   b.nombre,
-# MAGIC   b.ciudad,
-# MAGIC   date_trunc('month', r.fecha_resena)          AS mes,
-# MAGIC   count(*)                                     AS n_resenas,
-# MAGIC   round(avg(r.stars), 2)                       AS rating_promedio,
-# MAGIC   count(DISTINCT r.user_id)                    AS usuarios_unicos
-# MAGIC FROM workspace.yelp_silver.slv_review r
-# MAGIC JOIN workspace.yelp_silver.slv_business b USING (business_id)
-# MAGIC GROUP BY ALL;
+%sql
+CREATE OR REPLACE TABLE workspace.yelp_gold.gld_kpi_negocio_mensual
+COMMENT 'KPIs mensuales por negocio para Producto. Fuente: slv_review + slv_business.'
+AS
+SELECT
+  b.business_id,
+  b.nombre,
+  b.ciudad,
+  date_trunc('month', r.fecha_resena)          AS mes,
+  count(*)                                     AS n_resenas,
+  round(avg(r.stars), 2)                       AS rating_promedio,
+  count(DISTINCT r.user_id)                    AS usuarios_unicos
+FROM workspace.yelp_silver.slv_review r
+JOIN workspace.yelp_silver.slv_business b USING (business_id)
+GROUP BY ALL;
 
 # COMMAND ----------
 
