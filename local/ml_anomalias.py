@@ -70,7 +70,7 @@ VOLUME = f"/Volumes/workspace/yelp_gold/ml_artefactos"
 ESPERADO = {
     f"{SILVER}.slv_review_features": ["review_id", "business_id", "stars", "review_date",
                                       "feature_execution_id", "feature_processed_at", *FEATURES],
-    f"{SILVER}.slv_review_risk": ["review_id", "evaluation_run_id", "signal_count", "signal_rules_csv",
+    f"{SILVER}.slv_review_risk": ["review_id", "evaluation_run_id", "signal_count", "signal_rules",
                                   "weighted_risk_score", "requires_investigation", "investigation_priority"],
     f"{GOLD}.gld_dim_business": ["business_id", "business_name"],
 }
@@ -85,7 +85,7 @@ def leer_databricks(conn) -> pd.DataFrame:
     # Se toma la última ejecución de features y la misma corrida de reglas publicada en gold
     return consultar(conn, f"""
         SELECT f.review_id, f.business_id, b.business_name, f.stars, f.review_date, {cols},
-               r.signal_count, r.signal_rules_csv, r.weighted_risk_score,
+               r.signal_count, array_join(r.signal_rules, ',') AS signal_rules_csv, r.weighted_risk_score,
                r.requires_investigation, r.investigation_priority
         FROM {SILVER}.slv_review_features f
         LEFT JOIN {SILVER}.slv_review_risk r
