@@ -1,0 +1,35 @@
+:host { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+.nav {
+  background: var(--nav-bg); color: var(--nav-ink); padding: 20px 14px; display: flex; flex-direction: column;
+  gap: 18px; position: sticky; top: 0; height: 100vh;
+
+  .marca {
+    display: grid; gap: 2px; padding: 0 8px;
+    strong { color: var(--nav-activo); font-size: 18px; }
+    span { font-size: 12px; opacity: .75; }
+  }
+  nav { display: grid; gap: 2px; }
+  .grupo { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; opacity: .6; padding: 12px 8px 4px; }
+  a {
+    color: inherit; text-decoration: none; padding: 7px 10px; border-radius: 6px;
+    &:hover { background: rgba(255, 255, 255, .06); }
+    &.activo { background: rgba(255, 255, 255, .12); color: var(--nav-activo); font-weight: 600; }
+  }
+  footer { margin-top: auto; font-size: 11px; opacity: .7; display: grid; gap: 2px; padding: 0 8px; }
+}
+
+main { padding: 24px; min-width: 0; display: grid; gap: 16px; align-content: start; }
+.banner { background: var(--banner-bg); color: var(--banner-ink); border-radius: 8px; padding: 10px 14px; }
+.pie { color: var(--text-muted); font-size: 12px; margin: 8px 0 0; }
+
+@media (max-width: 860px) {
+  :host { grid-template-columns: minmax(0, 1fr); }
+  .nav {
+    position: static; height: auto; padding: 14px 16px; min-width: 0;
+    nav { grid-auto-flow: column; overflow-x: auto; justify-content: start; }
+    a { white-space: nowrap; }
+    .grupo, footer { display: none; }
+  }
+  main { padding: 16px; }
+}

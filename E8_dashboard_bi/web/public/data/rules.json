@@ -1,0 +1,68 @@
+[
+ {
+  "rule_id": "R001",
+  "rule_name": "Burst Activity",
+  "rule_type": "behavioral",
+  "reviews_evaluated": 40000,
+  "signals": 526,
+  "no_signals": 39474,
+  "not_evaluable": 0,
+  "signal_rate_pct": 1.315,
+  "evaluation_coverage_pct": 100.0
+ },
+ {
+  "rule_id": "R002",
+  "rule_name": "Rating Deviation",
+  "rule_type": "behavioral_content",
+  "reviews_evaluated": 40000,
+  "signals": 715,
+  "no_signals": 39285,
+  "not_evaluable": 0,
+  "signal_rate_pct": 1.788,
+  "evaluation_coverage_pct": 100.0
+ },
+ {
+  "rule_id": "R003",
+  "rule_name": "Repeated Text",
+  "rule_type": "content",
+  "reviews_evaluated": 40000,
+  "signals": 497,
+  "no_signals": 39503,
+  "not_evaluable": 0,
+  "signal_rate_pct": 1.242,
+  "evaluation_coverage_pct": 100.0
+ },
+ {
+  "rule_id": "R004",
+  "rule_name": "New Account High Activity",
+  "rule_type": "behavioral",
+  "reviews_evaluated": 40000,
+  "signals": 610,
+  "no_signals": 39270,
+  "not_evaluable": 120,
+  "signal_rate_pct": 1.53,
+  "evaluation_coverage_pct": 99.7
+ },
+ {
+  "rule_id": "R005",
+  "rule_name": "User-Business Concentration",
+  "rule_type": "behavioral",
+  "reviews_evaluated": 40000,
+  "signals": 90,
+  "no_signals": 39790,
+  "not_evaluable": 120,
+  "signal_rate_pct": 0.226,
+  "evaluation_coverage_pct": 99.7
+ },
+ {
+  "rule_id": "R006",
+  "rule_name": "Business Review Spike",
+  "rule_type": "temporal",
+  "reviews_evaluated": 40000,
+  "signals": 40,
+  "no_signals": 39960,
+  "not_evaluable": 0,
+  "signal_rate_pct": 0.1,
+  "evaluation_coverage_pct": 100.0
+ }
+]

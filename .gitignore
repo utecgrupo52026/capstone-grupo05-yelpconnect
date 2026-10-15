@@ -1,1 +1,17 @@
 .DS_Store
+
+# Credenciales locales de Databricks (NUNCA subir)
+.env
+*.env
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+local/salidas/
+
+# Angular / Node
+node_modules/
+dist/
+.angular/

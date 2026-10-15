@@ -1,0 +1,5 @@
+databricks-sql-connector[pyarrow]>=3.4
+pandas>=2.2
+pyarrow>=15
+scikit-learn>=1.5
+python-dotenv>=1.0

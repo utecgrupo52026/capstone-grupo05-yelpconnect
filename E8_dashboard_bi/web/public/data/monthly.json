@@ -1,0 +1,842 @@
+[
+ {
+  "mes": "2015-01",
+  "reviews_evaluated": 510,
+  "reviews_with_signal": 6,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.18,
+  "investigation_rate_pct": 0.78,
+  "avg_weighted_risk_score": 0.0053
+ },
+ {
+  "mes": "2015-02",
+  "reviews_evaluated": 436,
+  "reviews_with_signal": 5,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.15,
+  "investigation_rate_pct": 0.92,
+  "avg_weighted_risk_score": 0.0058
+ },
+ {
+  "mes": "2015-03",
+  "reviews_evaluated": 477,
+  "reviews_with_signal": 5,
+  "reviews_for_investigation": 3,
+  "priority_p1": 3,
+  "signal_rate_pct": 1.05,
+  "investigation_rate_pct": 0.63,
+  "avg_weighted_risk_score": 0.0042
+ },
+ {
+  "mes": "2015-04",
+  "reviews_evaluated": 494,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 8,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.23,
+  "investigation_rate_pct": 1.62,
+  "avg_weighted_risk_score": 0.0114
+ },
+ {
+  "mes": "2015-05",
+  "reviews_evaluated": 493,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 2.43,
+  "investigation_rate_pct": 1.42,
+  "avg_weighted_risk_score": 0.0111
+ },
+ {
+  "mes": "2015-06",
+  "reviews_evaluated": 461,
+  "reviews_with_signal": 13,
+  "reviews_for_investigation": 12,
+  "priority_p1": 12,
+  "signal_rate_pct": 2.82,
+  "investigation_rate_pct": 2.6,
+  "avg_weighted_risk_score": 0.0164
+ },
+ {
+  "mes": "2015-07",
+  "reviews_evaluated": 457,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 9,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.63,
+  "investigation_rate_pct": 1.97,
+  "avg_weighted_risk_score": 0.013
+ },
+ {
+  "mes": "2015-08",
+  "reviews_evaluated": 455,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 1.76,
+  "investigation_rate_pct": 1.32,
+  "avg_weighted_risk_score": 0.0099
+ },
+ {
+  "mes": "2015-09",
+  "reviews_evaluated": 492,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 1.42,
+  "investigation_rate_pct": 1.42,
+  "avg_weighted_risk_score": 0.0091
+ },
+ {
+  "mes": "2015-10",
+  "reviews_evaluated": 502,
+  "reviews_with_signal": 15,
+  "reviews_for_investigation": 12,
+  "priority_p1": 12,
+  "signal_rate_pct": 2.99,
+  "investigation_rate_pct": 2.39,
+  "avg_weighted_risk_score": 0.0164
+ },
+ {
+  "mes": "2015-11",
+  "reviews_evaluated": 459,
+  "reviews_with_signal": 6,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.31,
+  "investigation_rate_pct": 0.87,
+  "avg_weighted_risk_score": 0.0059
+ },
+ {
+  "mes": "2015-12",
+  "reviews_evaluated": 493,
+  "reviews_with_signal": 13,
+  "reviews_for_investigation": 11,
+  "priority_p1": 11,
+  "signal_rate_pct": 2.64,
+  "investigation_rate_pct": 2.23,
+  "avg_weighted_risk_score": 0.0158
+ },
+ {
+  "mes": "2016-01",
+  "reviews_evaluated": 509,
+  "reviews_with_signal": 13,
+  "reviews_for_investigation": 10,
+  "priority_p1": 10,
+  "signal_rate_pct": 2.55,
+  "investigation_rate_pct": 1.96,
+  "avg_weighted_risk_score": 0.0142
+ },
+ {
+  "mes": "2016-02",
+  "reviews_evaluated": 461,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 2.6,
+  "investigation_rate_pct": 1.3,
+  "avg_weighted_risk_score": 0.0102
+ },
+ {
+  "mes": "2016-03",
+  "reviews_evaluated": 482,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 7,
+  "priority_p1": 6,
+  "signal_rate_pct": 2.07,
+  "investigation_rate_pct": 1.45,
+  "avg_weighted_risk_score": 0.0094
+ },
+ {
+  "mes": "2016-04",
+  "reviews_evaluated": 466,
+  "reviews_with_signal": 13,
+  "reviews_for_investigation": 9,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.79,
+  "investigation_rate_pct": 1.93,
+  "avg_weighted_risk_score": 0.0139
+ },
+ {
+  "mes": "2016-05",
+  "reviews_evaluated": 483,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 8,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.28,
+  "investigation_rate_pct": 1.66,
+  "avg_weighted_risk_score": 0.0113
+ },
+ {
+  "mes": "2016-06",
+  "reviews_evaluated": 458,
+  "reviews_with_signal": 13,
+  "reviews_for_investigation": 10,
+  "priority_p1": 10,
+  "signal_rate_pct": 2.84,
+  "investigation_rate_pct": 2.18,
+  "avg_weighted_risk_score": 0.0163
+ },
+ {
+  "mes": "2016-07",
+  "reviews_evaluated": 527,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.28,
+  "investigation_rate_pct": 1.71,
+  "avg_weighted_risk_score": 0.012
+ },
+ {
+  "mes": "2016-08",
+  "reviews_evaluated": 474,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 5,
+  "priority_p1": 5,
+  "signal_rate_pct": 1.48,
+  "investigation_rate_pct": 1.05,
+  "avg_weighted_risk_score": 0.0076
+ },
+ {
+  "mes": "2016-09",
+  "reviews_evaluated": 501,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.4,
+  "investigation_rate_pct": 0.8,
+  "avg_weighted_risk_score": 0.0061
+ },
+ {
+  "mes": "2016-10",
+  "reviews_evaluated": 444,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 1.8,
+  "investigation_rate_pct": 1.58,
+  "avg_weighted_risk_score": 0.0105
+ },
+ {
+  "mes": "2016-11",
+  "reviews_evaluated": 479,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 5,
+  "priority_p1": 5,
+  "signal_rate_pct": 1.46,
+  "investigation_rate_pct": 1.04,
+  "avg_weighted_risk_score": 0.0071
+ },
+ {
+  "mes": "2016-12",
+  "reviews_evaluated": 487,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 1.44,
+  "investigation_rate_pct": 1.23,
+  "avg_weighted_risk_score": 0.0089
+ },
+ {
+  "mes": "2017-01",
+  "reviews_evaluated": 494,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.23,
+  "investigation_rate_pct": 1.82,
+  "avg_weighted_risk_score": 0.0121
+ },
+ {
+  "mes": "2017-02",
+  "reviews_evaluated": 449,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.45,
+  "investigation_rate_pct": 2.0,
+  "avg_weighted_risk_score": 0.0134
+ },
+ {
+  "mes": "2017-03",
+  "reviews_evaluated": 500,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 2.4,
+  "investigation_rate_pct": 1.4,
+  "avg_weighted_risk_score": 0.0105
+ },
+ {
+  "mes": "2017-04",
+  "reviews_evaluated": 484,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.27,
+  "investigation_rate_pct": 1.86,
+  "avg_weighted_risk_score": 0.0128
+ },
+ {
+  "mes": "2017-05",
+  "reviews_evaluated": 501,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.4,
+  "investigation_rate_pct": 1.8,
+  "avg_weighted_risk_score": 0.0119
+ },
+ {
+  "mes": "2017-06",
+  "reviews_evaluated": 468,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 5,
+  "priority_p1": 5,
+  "signal_rate_pct": 2.14,
+  "investigation_rate_pct": 1.07,
+  "avg_weighted_risk_score": 0.0082
+ },
+ {
+  "mes": "2017-07",
+  "reviews_evaluated": 467,
+  "reviews_with_signal": 13,
+  "reviews_for_investigation": 11,
+  "priority_p1": 11,
+  "signal_rate_pct": 2.78,
+  "investigation_rate_pct": 2.36,
+  "avg_weighted_risk_score": 0.0154
+ },
+ {
+  "mes": "2017-08",
+  "reviews_evaluated": 447,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 2.46,
+  "investigation_rate_pct": 1.34,
+  "avg_weighted_risk_score": 0.0106
+ },
+ {
+  "mes": "2017-09",
+  "reviews_evaluated": 438,
+  "reviews_with_signal": 15,
+  "reviews_for_investigation": 10,
+  "priority_p1": 9,
+  "signal_rate_pct": 3.42,
+  "investigation_rate_pct": 2.28,
+  "avg_weighted_risk_score": 0.015
+ },
+ {
+  "mes": "2017-10",
+  "reviews_evaluated": 493,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.23,
+  "investigation_rate_pct": 1.83,
+  "avg_weighted_risk_score": 0.013
+ },
+ {
+  "mes": "2017-11",
+  "reviews_evaluated": 466,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 8,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.36,
+  "investigation_rate_pct": 1.72,
+  "avg_weighted_risk_score": 0.0126
+ },
+ {
+  "mes": "2017-12",
+  "reviews_evaluated": 499,
+  "reviews_with_signal": 13,
+  "reviews_for_investigation": 10,
+  "priority_p1": 10,
+  "signal_rate_pct": 2.61,
+  "investigation_rate_pct": 2.0,
+  "avg_weighted_risk_score": 0.0141
+ },
+ {
+  "mes": "2018-01",
+  "reviews_evaluated": 525,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 2.29,
+  "investigation_rate_pct": 1.33,
+  "avg_weighted_risk_score": 0.0104
+ },
+ {
+  "mes": "2018-02",
+  "reviews_evaluated": 416,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.68,
+  "investigation_rate_pct": 0.96,
+  "avg_weighted_risk_score": 0.0078
+ },
+ {
+  "mes": "2018-03",
+  "reviews_evaluated": 472,
+  "reviews_with_signal": 9,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 1.91,
+  "investigation_rate_pct": 1.27,
+  "avg_weighted_risk_score": 0.0094
+ },
+ {
+  "mes": "2018-04",
+  "reviews_evaluated": 461,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 2.17,
+  "investigation_rate_pct": 1.52,
+  "avg_weighted_risk_score": 0.0106
+ },
+ {
+  "mes": "2018-05",
+  "reviews_evaluated": 445,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 5,
+  "priority_p1": 5,
+  "signal_rate_pct": 1.57,
+  "investigation_rate_pct": 1.12,
+  "avg_weighted_risk_score": 0.0072
+ },
+ {
+  "mes": "2018-06",
+  "reviews_evaluated": 459,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 1.53,
+  "investigation_rate_pct": 1.31,
+  "avg_weighted_risk_score": 0.009
+ },
+ {
+  "mes": "2018-07",
+  "reviews_evaluated": 528,
+  "reviews_with_signal": 14,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.65,
+  "investigation_rate_pct": 1.7,
+  "avg_weighted_risk_score": 0.013
+ },
+ {
+  "mes": "2018-08",
+  "reviews_evaluated": 497,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 2.01,
+  "investigation_rate_pct": 1.41,
+  "avg_weighted_risk_score": 0.0096
+ },
+ {
+  "mes": "2018-09",
+  "reviews_evaluated": 480,
+  "reviews_with_signal": 15,
+  "reviews_for_investigation": 10,
+  "priority_p1": 10,
+  "signal_rate_pct": 3.12,
+  "investigation_rate_pct": 2.08,
+  "avg_weighted_risk_score": 0.0153
+ },
+ {
+  "mes": "2018-10",
+  "reviews_evaluated": 461,
+  "reviews_with_signal": 7,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.52,
+  "investigation_rate_pct": 0.87,
+  "avg_weighted_risk_score": 0.007
+ },
+ {
+  "mes": "2018-11",
+  "reviews_evaluated": 469,
+  "reviews_with_signal": 6,
+  "reviews_for_investigation": 3,
+  "priority_p1": 3,
+  "signal_rate_pct": 1.28,
+  "investigation_rate_pct": 0.64,
+  "avg_weighted_risk_score": 0.005
+ },
+ {
+  "mes": "2018-12",
+  "reviews_evaluated": 488,
+  "reviews_with_signal": 15,
+  "reviews_for_investigation": 10,
+  "priority_p1": 10,
+  "signal_rate_pct": 3.07,
+  "investigation_rate_pct": 2.05,
+  "avg_weighted_risk_score": 0.0155
+ },
+ {
+  "mes": "2019-01",
+  "reviews_evaluated": 473,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.69,
+  "investigation_rate_pct": 0.85,
+  "avg_weighted_risk_score": 0.0068
+ },
+ {
+  "mes": "2019-02",
+  "reviews_evaluated": 407,
+  "reviews_with_signal": 4,
+  "reviews_for_investigation": 3,
+  "priority_p1": 3,
+  "signal_rate_pct": 0.98,
+  "investigation_rate_pct": 0.74,
+  "avg_weighted_risk_score": 0.0055
+ },
+ {
+  "mes": "2019-03",
+  "reviews_evaluated": 496,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 2.42,
+  "investigation_rate_pct": 1.41,
+  "avg_weighted_risk_score": 0.011
+ },
+ {
+  "mes": "2019-04",
+  "reviews_evaluated": 496,
+  "reviews_with_signal": 15,
+  "reviews_for_investigation": 12,
+  "priority_p1": 11,
+  "signal_rate_pct": 3.02,
+  "investigation_rate_pct": 2.42,
+  "avg_weighted_risk_score": 0.015
+ },
+ {
+  "mes": "2019-05",
+  "reviews_evaluated": 477,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 8,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.52,
+  "investigation_rate_pct": 1.68,
+  "avg_weighted_risk_score": 0.0117
+ },
+ {
+  "mes": "2019-06",
+  "reviews_evaluated": 481,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 7,
+  "priority_p1": 5,
+  "signal_rate_pct": 2.08,
+  "investigation_rate_pct": 1.46,
+  "avg_weighted_risk_score": 0.0082
+ },
+ {
+  "mes": "2019-07",
+  "reviews_evaluated": 510,
+  "reviews_with_signal": 9,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 1.76,
+  "investigation_rate_pct": 1.37,
+  "avg_weighted_risk_score": 0.0094
+ },
+ {
+  "mes": "2019-08",
+  "reviews_evaluated": 486,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 1.65,
+  "investigation_rate_pct": 1.44,
+  "avg_weighted_risk_score": 0.0096
+ },
+ {
+  "mes": "2019-09",
+  "reviews_evaluated": 476,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 1.68,
+  "investigation_rate_pct": 1.47,
+  "avg_weighted_risk_score": 0.0102
+ },
+ {
+  "mes": "2019-10",
+  "reviews_evaluated": 472,
+  "reviews_with_signal": 9,
+  "reviews_for_investigation": 5,
+  "priority_p1": 5,
+  "signal_rate_pct": 1.91,
+  "investigation_rate_pct": 1.06,
+  "avg_weighted_risk_score": 0.0078
+ },
+ {
+  "mes": "2019-11",
+  "reviews_evaluated": 466,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 1.72,
+  "investigation_rate_pct": 1.29,
+  "avg_weighted_risk_score": 0.0088
+ },
+ {
+  "mes": "2019-12",
+  "reviews_evaluated": 489,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.45,
+  "investigation_rate_pct": 1.84,
+  "avg_weighted_risk_score": 0.013
+ },
+ {
+  "mes": "2020-01",
+  "reviews_evaluated": 507,
+  "reviews_with_signal": 6,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.18,
+  "investigation_rate_pct": 0.79,
+  "avg_weighted_risk_score": 0.0053
+ },
+ {
+  "mes": "2020-02",
+  "reviews_evaluated": 447,
+  "reviews_with_signal": 13,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 2.91,
+  "investigation_rate_pct": 1.34,
+  "avg_weighted_risk_score": 0.0113
+ },
+ {
+  "mes": "2020-03",
+  "reviews_evaluated": 495,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 5,
+  "priority_p1": 5,
+  "signal_rate_pct": 2.22,
+  "investigation_rate_pct": 1.01,
+  "avg_weighted_risk_score": 0.0085
+ },
+ {
+  "mes": "2020-04",
+  "reviews_evaluated": 474,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 7,
+  "priority_p1": 6,
+  "signal_rate_pct": 2.32,
+  "investigation_rate_pct": 1.48,
+  "avg_weighted_risk_score": 0.0099
+ },
+ {
+  "mes": "2020-05",
+  "reviews_evaluated": 494,
+  "reviews_with_signal": 14,
+  "reviews_for_investigation": 11,
+  "priority_p1": 11,
+  "signal_rate_pct": 2.83,
+  "investigation_rate_pct": 2.23,
+  "avg_weighted_risk_score": 0.0149
+ },
+ {
+  "mes": "2020-06",
+  "reviews_evaluated": 475,
+  "reviews_with_signal": 5,
+  "reviews_for_investigation": 2,
+  "priority_p1": 2,
+  "signal_rate_pct": 1.05,
+  "investigation_rate_pct": 0.42,
+  "avg_weighted_risk_score": 0.0035
+ },
+ {
+  "mes": "2020-07",
+  "reviews_evaluated": 486,
+  "reviews_with_signal": 6,
+  "reviews_for_investigation": 4,
+  "priority_p1": 4,
+  "signal_rate_pct": 1.23,
+  "investigation_rate_pct": 0.82,
+  "avg_weighted_risk_score": 0.0056
+ },
+ {
+  "mes": "2020-08",
+  "reviews_evaluated": 493,
+  "reviews_with_signal": 14,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.84,
+  "investigation_rate_pct": 1.83,
+  "avg_weighted_risk_score": 0.0127
+ },
+ {
+  "mes": "2020-09",
+  "reviews_evaluated": 444,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 2.25,
+  "investigation_rate_pct": 2.03,
+  "avg_weighted_risk_score": 0.0136
+ },
+ {
+  "mes": "2020-10",
+  "reviews_evaluated": 459,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 8,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.18,
+  "investigation_rate_pct": 1.74,
+  "avg_weighted_risk_score": 0.0115
+ },
+ {
+  "mes": "2020-11",
+  "reviews_evaluated": 452,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 2.65,
+  "investigation_rate_pct": 1.33,
+  "avg_weighted_risk_score": 0.0113
+ },
+ {
+  "mes": "2020-12",
+  "reviews_evaluated": 496,
+  "reviews_with_signal": 12,
+  "reviews_for_investigation": 10,
+  "priority_p1": 10,
+  "signal_rate_pct": 2.42,
+  "investigation_rate_pct": 2.02,
+  "avg_weighted_risk_score": 0.0135
+ },
+ {
+  "mes": "2021-01",
+  "reviews_evaluated": 474,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 6,
+  "priority_p1": 6,
+  "signal_rate_pct": 1.69,
+  "investigation_rate_pct": 1.27,
+  "avg_weighted_risk_score": 0.0091
+ },
+ {
+  "mes": "2021-02",
+  "reviews_evaluated": 425,
+  "reviews_with_signal": 5,
+  "reviews_for_investigation": 3,
+  "priority_p1": 3,
+  "signal_rate_pct": 1.18,
+  "investigation_rate_pct": 0.71,
+  "avg_weighted_risk_score": 0.0056
+ },
+ {
+  "mes": "2021-03",
+  "reviews_evaluated": 466,
+  "reviews_with_signal": 14,
+  "reviews_for_investigation": 12,
+  "priority_p1": 12,
+  "signal_rate_pct": 3.0,
+  "investigation_rate_pct": 2.58,
+  "avg_weighted_risk_score": 0.0178
+ },
+ {
+  "mes": "2021-04",
+  "reviews_evaluated": 446,
+  "reviews_with_signal": 9,
+  "reviews_for_investigation": 8,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.02,
+  "investigation_rate_pct": 1.79,
+  "avg_weighted_risk_score": 0.012
+ },
+ {
+  "mes": "2021-05",
+  "reviews_evaluated": 439,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 6,
+  "priority_p1": 5,
+  "signal_rate_pct": 2.28,
+  "investigation_rate_pct": 1.37,
+  "avg_weighted_risk_score": 0.0087
+ },
+ {
+  "mes": "2021-06",
+  "reviews_evaluated": 488,
+  "reviews_with_signal": 16,
+  "reviews_for_investigation": 9,
+  "priority_p1": 9,
+  "signal_rate_pct": 3.28,
+  "investigation_rate_pct": 1.84,
+  "avg_weighted_risk_score": 0.0134
+ },
+ {
+  "mes": "2021-07",
+  "reviews_evaluated": 516,
+  "reviews_with_signal": 11,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 2.13,
+  "investigation_rate_pct": 1.36,
+  "avg_weighted_risk_score": 0.0107
+ },
+ {
+  "mes": "2021-08",
+  "reviews_evaluated": 458,
+  "reviews_with_signal": 10,
+  "reviews_for_investigation": 8,
+  "priority_p1": 8,
+  "signal_rate_pct": 2.18,
+  "investigation_rate_pct": 1.75,
+  "avg_weighted_risk_score": 0.012
+ },
+ {
+  "mes": "2021-09",
+  "reviews_evaluated": 495,
+  "reviews_with_signal": 14,
+  "reviews_for_investigation": 11,
+  "priority_p1": 11,
+  "signal_rate_pct": 2.83,
+  "investigation_rate_pct": 2.22,
+  "avg_weighted_risk_score": 0.0148
+ },
+ {
+  "mes": "2021-10",
+  "reviews_evaluated": 469,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 5,
+  "priority_p1": 5,
+  "signal_rate_pct": 1.71,
+  "investigation_rate_pct": 1.07,
+  "avg_weighted_risk_score": 0.0076
+ },
+ {
+  "mes": "2021-11",
+  "reviews_evaluated": 464,
+  "reviews_with_signal": 8,
+  "reviews_for_investigation": 7,
+  "priority_p1": 7,
+  "signal_rate_pct": 1.72,
+  "investigation_rate_pct": 1.51,
+  "avg_weighted_risk_score": 0.0096
+ },
+ {
+  "mes": "2021-12",
+  "reviews_evaluated": 502,
+  "reviews_with_signal": 9,
+  "reviews_for_investigation": 2,
+  "priority_p1": 2,
+  "signal_rate_pct": 1.79,
+  "investigation_rate_pct": 0.4,
+  "avg_weighted_risk_score": 0.0045
+ }
+]

@@ -1,0 +1,14 @@
+{
+ "reviews_evaluated": 40000,
+ "reviews_with_signal": 854,
+ "reviews_for_investigation": 600,
+ "priority_p1": 591,
+ "priority_p2": 9,
+ "priority_p3": 0,
+ "avg_weighted_risk_score": 0.0106,
+ "max_weighted_risk_score": 0.85,
+ "evaluation_run_id": "demo-run-0001",
+ "reviews_incomplete_evaluation": 160,
+ "signal_rate_pct": 2.13,
+ "investigation_rate_pct": 1.5
+}
