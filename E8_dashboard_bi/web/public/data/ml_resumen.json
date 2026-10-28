@@ -1,0 +1,245 @@
+{
+ "modelo": {
+  "version": "iforest-v1.0",
+  "algoritmo": "IsolationForest",
+  "n_estimators": 300,
+  "contaminacion": 0.01,
+  "semilla": 42,
+  "features": [
+   "user_reviews_30m",
+   "user_reviews_1h",
+   "user_reviews_24h",
+   "rating_deviation",
+   "text_length",
+   "text_repeat_count",
+   "account_age_days",
+   "user_review_count",
+   "user_business_review_count",
+   "user_business_concentration",
+   "business_spike_ratio",
+   "business_day_zscore",
+   "review_hour"
+  ],
+  "entrenado_en": "2026-10-15T23:19:07+00:00"
+ },
+ "reseñas_puntuadas": 400000,
+ "anomalias_ml": 4000,
+ "marcadas_por_reglas": 302,
+ "matriz": {
+  "ambos": 65,
+  "solo_reglas": 237,
+  "solo_ml": 3935,
+  "ninguno": 395763
+ },
+ "jaccard_ml_reglas": 0.0153,
+ "pct_anomalias_con_alguna_senal": 32.75,
+ "correlacion_spearman_score_vs_riesgo": 0.24,
+ "perfil_features": [
+  {
+   "feature": "user_reviews_30m",
+   "etiqueta": "Reseñas del usuario en 30 min",
+   "mediana_anomalas": 4.0,
+   "mediana_normales": 1.0
+  },
+  {
+   "feature": "user_reviews_1h",
+   "etiqueta": "Reseñas del usuario en 1 h",
+   "mediana_anomalas": 4.0,
+   "mediana_normales": 1.0
+  },
+  {
+   "feature": "user_reviews_24h",
+   "etiqueta": "Reseñas del usuario en 24 h",
+   "mediana_anomalas": 5.0,
+   "mediana_normales": 1.0
+  },
+  {
+   "feature": "rating_deviation",
+   "etiqueta": "Desvío de rating",
+   "mediana_anomalas": 0.5,
+   "mediana_normales": 1.0
+  },
+  {
+   "feature": "text_length",
+   "etiqueta": "Largo del texto",
+   "mediana_anomalas": 334.0,
+   "mediana_normales": 455.0
+  },
+  {
+   "feature": "text_repeat_count",
+   "etiqueta": "Texto repetido",
+   "mediana_anomalas": 1.0,
+   "mediana_normales": 1.0
+  },
+  {
+   "feature": "account_age_days",
+   "etiqueta": "Antigüedad de la cuenta",
+   "mediana_anomalas": 241.0,
+   "mediana_normales": 876.0
+  },
+  {
+   "feature": "user_review_count",
+   "etiqueta": "Reseñas totales del usuario",
+   "mediana_anomalas": 18.0,
+   "mediana_normales": 4.0
+  },
+  {
+   "feature": "user_business_review_count",
+   "etiqueta": "Reseñas al mismo negocio",
+   "mediana_anomalas": 1.0,
+   "mediana_normales": 1.0
+  },
+  {
+   "feature": "user_business_concentration",
+   "etiqueta": "Concentración en un negocio",
+   "mediana_anomalas": 0.0625,
+   "mediana_normales": 0.25
+  },
+  {
+   "feature": "business_spike_ratio",
+   "etiqueta": "Pico diario del negocio",
+   "mediana_anomalas": 1.0,
+   "mediana_normales": 0.9556451612903225
+  },
+  {
+   "feature": "business_day_zscore",
+   "etiqueta": "Z-score diario del negocio",
+   "mediana_anomalas": -0.11952286093343921,
+   "mediana_normales": -0.2324952774876387
+  },
+  {
+   "feature": "review_hour",
+   "etiqueta": "Hora de publicación",
+   "mediana_anomalas": 14.0,
+   "mediana_normales": 16.0
+  }
+ ],
+ "features_mas_frecuentes": [
+  {
+   "feature": "business_day_zscore",
+   "etiqueta": "Z-score diario del negocio",
+   "anomalias": 2617
+  },
+  {
+   "feature": "business_spike_ratio",
+   "etiqueta": "Pico diario del negocio",
+   "anomalias": 2533
+  },
+  {
+   "feature": "account_age_days",
+   "etiqueta": "Antigüedad de la cuenta",
+   "anomalias": 2089
+  },
+  {
+   "feature": "user_review_count",
+   "etiqueta": "Reseñas totales del usuario",
+   "anomalias": 1581
+  },
+  {
+   "feature": "text_length",
+   "etiqueta": "Largo del texto",
+   "anomalias": 1172
+  },
+  {
+   "feature": "rating_deviation",
+   "etiqueta": "Desvío de rating",
+   "anomalias": 1074
+  },
+  {
+   "feature": "review_hour",
+   "etiqueta": "Hora de publicación",
+   "anomalias": 910
+  },
+  {
+   "feature": "user_business_concentration",
+   "etiqueta": "Concentración en un negocio",
+   "anomalias": 24
+  }
+ ],
+ "histograma": {
+  "bordes": [
+   0.3619,
+   0.3771,
+   0.3924,
+   0.4077,
+   0.423,
+   0.4382,
+   0.4535,
+   0.4688,
+   0.4841,
+   0.4994,
+   0.5146,
+   0.5299,
+   0.5452,
+   0.5605,
+   0.5757,
+   0.591,
+   0.6063,
+   0.6216,
+   0.6369,
+   0.6521,
+   0.6674,
+   0.6827,
+   0.698,
+   0.7132,
+   0.7285,
+   0.7438
+  ],
+  "normales": [
+   23404,
+   64062,
+   66149,
+   49705,
+   37697,
+   30419,
+   27020,
+   23447,
+   19061,
+   14151,
+   10709,
+   8895,
+   7275,
+   5324,
+   3970,
+   2994,
+   1718,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "anomalas": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   349,
+   1459,
+   997,
+   658,
+   301,
+   149,
+   58,
+   22,
+   7
+  ]
+ },
+ "nota": "Candidatos a revisión generados por un modelo no supervisado. NO representan fraude confirmado.",
+ "modo": "databricks"
+}

@@ -1,0 +1,14 @@
+{
+ "reviews_evaluated": 400000,
+ "reviews_with_signal": 27233,
+ "reviews_for_investigation": 302,
+ "priority_p1": 3,
+ "priority_p2": 299,
+ "priority_p3": 26931,
+ "reviews_incomplete_evaluation": 26744,
+ "avg_weighted_risk_score": 0.0104,
+ "max_weighted_risk_score": 0.5,
+ "signal_rate_pct": 6.8083,
+ "investigation_rate_pct": 0.0755,
+ "evaluation_run_id": "6c95bbfe-aa13-4a07-bc28-9f50aad51fdb"
+}

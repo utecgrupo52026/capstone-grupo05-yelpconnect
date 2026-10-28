@@ -1,0 +1,36 @@
+<aside class="nav">
+  <div class="marca">
+    <strong>YelpConnect</strong>
+    <span>Plataforma de Datos · Grupo 05</span>
+  </div>
+  <nav>
+    @for (s of secciones; track s.ruta; let i = $index) {
+      @if (i === 0 || secciones[i - 1].grupo !== s.grupo) {
+        <div class="grupo">{{ s.grupo }}</div>
+      }
+      <a [routerLink]="s.ruta" routerLinkActive="activo">{{ s.nombre }}</a>
+    }
+  </nav>
+  <footer>
+    @if (meta(); as m) {
+      <div>Run: <span class="mono">{{ m.evaluation_run_id }}</span></div>
+      <div>Snapshot: {{ fecha(m.generado_en) }}</div>
+    }
+    <div>Fuente: Databricks · yelp_gold / yelp_gov</div>
+  </footer>
+</aside>
+
+<main>
+  @if (meta()?.modo === 'demo') {
+    <div class="banner" role="status">
+      <strong>Datos de demostración.</strong> Estos números son sintéticos y no provienen de Databricks.
+      Ejecuta <span class="mono">local/exportar_gold.py</span> para publicar el snapshot real.
+    </div>
+  } @else if (meta() === null) {
+    <div class="banner" role="alert">
+      No se encontró <span class="mono">data/meta.json</span>: ejecuta los scripts de <span class="mono">local/</span>.
+    </div>
+  }
+  <router-outlet />
+  <p class="pie">Señales heurísticas y candidatos a investigación. No representan fraude confirmado.</p>
+</main>

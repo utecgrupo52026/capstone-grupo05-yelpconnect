@@ -1,0 +1,15 @@
+{
+ "modo": "databricks",
+ "generado_en": "2026-10-15T23:17:42+00:00",
+ "evaluation_run_id": "6c95bbfe-aa13-4a07-bc28-9f50aad51fdb",
+ "fuentes": [
+  "workspace.yelp_gold.gld_investigation_queue",
+  "workspace.yelp_gold.gld_kpi_trust_safety_business",
+  "workspace.yelp_gold.gld_kpi_trust_safety_daily",
+  "workspace.yelp_gold.gld_kpi_trust_safety_overview",
+  "workspace.yelp_gold.gld_kpi_trust_safety_rule",
+  "workspace.yelp_gov.dq_reglas",
+  "workspace.yelp_gov.dq_resultados"
+ ],
+ "nota": "Señales heurísticas y candidatos a investigación. NO representan fraude confirmado."
+}

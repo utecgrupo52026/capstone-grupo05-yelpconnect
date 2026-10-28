@@ -1,0 +1,114 @@
+/* Tokens: paleta de referencia validada (CVD) — claro y oscuro */
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface-1: #fcfcfb;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --accent: #2a78d6;
+  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100;
+  --series-5: #e87ba4; --series-6: #008300; --series-7: #6250d6; --series-8: #e34948;
+  --status-good: #0ca30c; --status-warning: #fab219; --status-serious: #ec835a; --status-critical: #d03b3b;
+  --banner-bg: #fff4d6; --banner-ink: #6b4a00;
+  --nav-bg: #13233a; --nav-ink: #c9d4e3; --nav-activo: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --accent: #3987e5;
+    --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+    --series-5: #d55181; --series-6: #008300; --series-7: #9085e9; --series-8: #e66767;
+    --banner-bg: #3a2e0c; --banner-ink: #f5d98a;
+    --nav-bg: #111a26;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--page);
+  color: var(--text-primary);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+h1, h2, h3 { margin: 0; font-weight: 600; }
+a { color: var(--accent); }
+
+/* ---- Bloques de página ---- */
+.pagina { display: grid; gap: 16px; }
+.pagina > .intro h1 { font-size: 22px; }
+.pagina > .intro p { margin: 4px 0 0; color: var(--text-secondary); max-width: 80ch; }
+
+.kpis { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.kpi {
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+  .kpi-label { color: var(--text-secondary); font-size: 12px; }
+  .kpi-valor { font-size: 26px; font-weight: 600; margin-top: 2px; }
+  .kpi-detalle { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+}
+
+.rejilla { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); }
+.panel {
+  display: block; background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px; min-width: 0;
+  header { margin-bottom: 10px; }
+  h2 { font-size: 15px; }
+  .stakeholder { margin: 2px 0 0; color: var(--text-muted); font-size: 12px; }
+}
+
+/* ---- Tablas ---- */
+.tabla-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; font-size: 12px; white-space: nowrap; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+th.ordenable { cursor: pointer; user-select: none; }
+th.ordenable:hover { color: var(--text-primary); }
+.texto { color: var(--text-secondary); max-width: 46ch; }
+.mono { font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
+
+/* ---- Chips (estado = color + etiqueta, nunca color solo) ---- */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px; border-radius: 999px;
+  border: 1px solid var(--border); font-size: 12px; font-weight: 600; white-space: nowrap;
+  .punto { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); }
+  &.p1 .punto, &.critico .punto { background: var(--status-critical); }
+  &.p2 .punto { background: var(--status-serious); }
+  &.p3 .punto, &.alerta .punto { background: var(--status-warning); }
+  &.ok .punto { background: var(--status-good); }
+}
+.regla {
+  display: inline-block; padding: 0 6px; margin: 1px 2px 1px 0; border-radius: 4px;
+  background: color-mix(in srgb, var(--text-muted) 15%, transparent); font-size: 11px; font-weight: 600;
+}
+
+/* ---- Controles ---- */
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+input[type="search"], select {
+  font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 10px;
+}
+input[type="search"] { min-width: min(240px, 100%); }
+.segmentado {
+  display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  button { font: inherit; border: 0; background: transparent; color: var(--text-secondary); padding: 6px 12px; cursor: pointer; }
+  button + button { border-left: 1px solid var(--border); }
+  button.activo { background: var(--accent); color: #fff; }
+}
+.sin-datos { color: var(--text-muted); padding: 24px 0; text-align: center; }
+.nota { color: var(--text-muted); font-size: 12px; margin: 8px 0 0; }
+
+/* Las páginas enrutadas son ítems de la grilla de <main>: sin esto, una tabla ancha desborda en móvil */
+main > * { min-width: 0; }

@@ -1,0 +1,19 @@
+# Netlify: en "Base directory" configurar  E8_dashboard_bi/web
+[build]
+  command = "npm run build"
+  publish = "dist/web/browser"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# SPA: todas las rutas sirven index.html (el router de Angular resuelve /resumen, /ml, etc.)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Los JSON del snapshot se pueden cachear poco tiempo; cambian en cada exportación
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
