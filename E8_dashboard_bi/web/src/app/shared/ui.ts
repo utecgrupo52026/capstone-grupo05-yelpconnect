@@ -17,13 +17,21 @@ export class Kpi {
   readonly detalle = input<string>();
 }
 
-/** Panel de un visual. Cada visual declara a qué stakeholder responde (requisito E8). */
+/**
+ * Panel de un visual. Cada visual declara a qué requerimiento (sección 7.1 del Documento
+ * Formal) y a qué stakeholder responde: es la Definition of Done de E8.
+ */
 @Component({
   selector: 'app-panel',
   template: `
     <header>
       <h2>{{ titulo() }}</h2>
-      @if (stakeholder()) { <p class="stakeholder">Responde a: {{ stakeholder() }}</p> }
+      @if (req() || stakeholder()) {
+        <p class="stakeholder">
+          @if (req()) { <span class="req">{{ req() }}</span> }
+          @if (stakeholder()) { Responde a: {{ stakeholder() }} }
+        </p>
+      }
     </header>
     <ng-content />
   `,
@@ -33,6 +41,7 @@ export class Kpi {
 export class Panel {
   readonly titulo = input.required<string>();
   readonly stakeholder = input<string>();
+  readonly req = input<string>();
 }
 
 /** Estado de carga / ausencia de datos. */

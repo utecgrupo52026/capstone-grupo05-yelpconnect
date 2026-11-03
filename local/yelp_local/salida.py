@@ -3,17 +3,21 @@ import hashlib
 import json
 import math
 from datetime import date, datetime, timezone
+from decimal import Decimal
 from pathlib import Path
 
 import pandas as pd
 
-# Carpeta servida por Angular como /data/*.json
-DATA_DIR = Path(__file__).resolve().parents[2] / "E8_dashboard_bi" / "web" / "public" / "data"
+# Carpeta servida por Angular como /data/*.json (exportar_gold.py --salida la cambia)
+REPO = Path(__file__).resolve().parents[2]
+DATA_DIR = REPO / "E8_dashboard_bi" / "web" / "public" / "data"
 
 
 def _limpiar(v):
     if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
         return None
+    if isinstance(v, Decimal):
+        return _limpiar(float(v))
     if isinstance(v, (pd.Timestamp, datetime, date)):
         return v.isoformat()[:10] if isinstance(v, date) and not isinstance(v, datetime) else v.isoformat()
     if hasattr(v, "item"):  # escalares numpy
@@ -27,14 +31,36 @@ def registros(df: pd.DataFrame) -> list[dict]:
     return [{k: _limpiar(v) for k, v in fila.items()} for fila in df.to_dict(orient="records")]
 
 
-def escribir(nombre: str, contenido) -> Path:
+def _mostrar(ruta: Path) -> str:
+    try:
+        return str(ruta.relative_to(REPO))
+    except ValueError:
+        return str(ruta)
+
+
+def escribir(nombre: str, contenido, compacto: bool = False) -> Path:
+    """compacto=True omite la sangría: para series largas que solo lee el dashboard."""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     if isinstance(contenido, pd.DataFrame):
         contenido = registros(contenido)
     ruta = DATA_DIR / f"{nombre}.json"
-    ruta.write_text(json.dumps(contenido, ensure_ascii=False, indent=1, default=_limpiar), encoding="utf8")
-    print(f"  → {ruta.relative_to(DATA_DIR.parents[3])}")
+    formato = {"separators": (",", ":")} if compacto else {"indent": 1}
+    ruta.write_text(json.dumps(contenido, ensure_ascii=False, default=_limpiar, **formato), encoding="utf8")
+    print(f"  → {_mostrar(ruta)}")
     return ruta
+
+
+def escribir_o_quitar(nombre: str, contenido, compacto: bool = False) -> Path | None:
+    """Si no hay datos, borra el JSON anterior: así el dashboard no muestra cifras de otro run."""
+    if contenido is not None:
+        return escribir(nombre, contenido, compacto)
+    ruta = DATA_DIR / f"{nombre}.json"
+    if ruta.exists():
+        ruta.unlink()
+        print(f"  ✗ {_mostrar(ruta)} (sin datos: se quitó el archivo anterior)")
+    else:
+        print(f"  ✗ {nombre}.json (sin datos: no se generó)")
+    return None
 
 
 def hash_corto(valor: str | None) -> str | None:

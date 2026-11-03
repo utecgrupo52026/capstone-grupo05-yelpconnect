@@ -4,6 +4,8 @@ Datos SINTÉTICOS con el mismo contrato que las tablas reales.
 Sirven solo para desarrollar y probar el dashboard y el modelo sin conexión a
 Databricks. El dashboard muestra un aviso visible cuando meta.modo == "demo".
 """
+from collections import Counter
+
 import numpy as np
 import pandas as pd
 
@@ -19,6 +21,8 @@ REGLAS = [("R001", "Burst Activity", "behavioral"),
           ("R005", "User-Business Concentration", "behavioral"),
           ("R006", "Business Review Spike", "temporal")]
 PESOS = {"R001": 0.20, "R002": 0.15, "R003": 0.20, "R004": 0.15, "R005": 0.15, "R006": 0.15}
+UMBRALES = {"R001": 8.0, "R002": 3.0, "R003": 3.0, "R004": 30.0, "R005": 0.8, "R006": 3.0}
+INICIO_RUN = pd.Timestamp("2026-10-09 01:00:00", tz="UTC")
 
 
 def features_demo(n: int = 40_000) -> pd.DataFrame:
@@ -125,18 +129,61 @@ def datos_gold_demo() -> dict[str, pd.DataFrame]:
     cola["risk_classification"] = np.where(cola["weighted_risk_score"] >= .6, "HIGH", "MEDIUM")
     cola["investigation_status"] = rng.choice(["PENDING", "IN_REVIEW"], len(cola), p=[.8, .2])
 
+    # Bitácora DQ: una ejecución por capa antes del run y una de silver DESPUÉS del run (con una
+    # regla crítica en rojo). seleccionar_dq() debe ignorar esta última al certificar la corrida.
     dims = ["completitud", "unicidad", "validez", "consistencia", "integridad"]
     dq = []
-    for capa in ("bronze", "silver"):
+    ejecuciones = [("bronze", "dq-demo-bronze-01", INICIO_RUN - pd.Timedelta(hours=4)),
+                   ("silver", "dq-demo-silver-01", INICIO_RUN - pd.Timedelta(hours=3)),
+                   ("silver", "dq-demo-silver-02", INICIO_RUN + pd.Timedelta(days=3))]
+    for capa, ej_id, ts in ejecuciones:
+        posterior = ts > INICIO_RUN
         for i, dim in enumerate(dims * 3):
             pct = float(np.clip(rng.normal(99.2, 1.2), 90, 100))
             umbral = 98.0 if i % 3 else 95.0
-            dq.append({"capa": capa, "dimension": dim, "regla_id": f"DQ-{len(dq) + 1:03d}",
+            if posterior and i == 0:
+                pct = 80.0
+            dq.append({"ejecucion_id": ej_id, "capa": capa, "dimension": dim,
+                       "regla_id": f"DQ-{capa[0].upper()}-{i + 1:03d}",
                        "descripcion": f"Regla demo de {dim}", "tabla_objetivo": f"workspace.yelp_{capa}.demo",
                        "columna": "*", "criticidad": ["alta", "media", "baja"][i % 3],
                        "filas_totales": n, "filas_error": int(n * (100 - pct) / 100),
                        "pct_cumplimiento": round(pct, 2), "umbral_pct": umbral, "paso": pct >= umbral,
-                       "ejecucion_ts": pd.Timestamp("2026-10-08 22:00:00")})
+                       "ejecucion_ts": ts})
+
+    # REQ-01: evolución mensual por negocio (misma ventana que la consulta real)
+    f["mes"] = pd.to_datetime(f["review_date"]).dt.strftime("%Y-%m")
+    desde = str(pd.Period(f["mes"].max(), "M") - 35)
+    negocios_mes = (f[f["mes"] >= desde]
+                    .groupby(["business_id", "mes"], as_index=False)
+                    .agg(reviews_evaluated=("review_id", "size"),
+                         reviews_with_signal=("con_senal", "sum"),
+                         reviews_for_investigation=("requires_investigation", "sum")))
+
+    # REQ-04: pares de reglas en la misma reseña y combinaciones exactas
+    pares, combos, combos_inv = Counter(), Counter(), Counter()
+    con_senal = f[f["con_senal"]]
+    for csv, inv in zip(con_senal["signal_rules_csv"], con_senal["requires_investigation"]):
+        rs = sorted(csv.split(","))
+        combos[" + ".join(rs)] += 1
+        combos_inv[" + ".join(rs)] += int(inv)
+        for i, a in enumerate(rs):
+            for b in rs[i:]:
+                pares[(a, b)] += 1
+    pares_df = pd.DataFrame([(a, b, c) for (a, b), c in pares.items()], columns=["regla_a", "regla_b", "reviews"])
+    combos_df = pd.DataFrame([(k, k.count("+") + 1, c, combos_inv[k]) for k, c in combos.most_common(15)],
+                             columns=["combinacion", "n_reglas", "reviews", "reviews_for_investigation"])
+
+    # REQ-06 / REQ-07: run y versiones
+    run = pd.DataFrame([{"evaluation_run_id": RUN_ID, "pipeline_name": "03_trust_safety_evaluacion",
+                         "pipeline_version": "3.0.0", "dataset_version": "demo-features-0001",
+                         "started_at": INICIO_RUN, "finished_at": INICIO_RUN + pd.Timedelta(minutes=18),
+                         "execution_status": "SUCCESS"}])
+    versiones = pd.DataFrame([{"rule_id": rid, "rule_version_id": f"{rid}-v1.0", "rule_version": "1.0",
+                               "threshold": UMBRALES[rid], "weight": PESOS[rid], "rule_status": "ACTIVE",
+                               "valid_from": pd.Timestamp("2026-09-01", tz="UTC")} for rid, _, _ in REGLAS])
+    riesgo = pd.DataFrame([{"risk_model_version": "1.0.0", "feature_execution_id": "demo-features-0001",
+                            "risk_consolidation_id": "demo-risk-0001", "reviews": n}])
 
     return {
         "overview": pd.DataFrame([ov]),
@@ -147,4 +194,10 @@ def datos_gold_demo() -> dict[str, pd.DataFrame]:
                        "signal_count", "signal_rules_csv", "weighted_risk_score", "risk_classification",
                        "investigation_priority", "investigation_status"]],
         "dq": pd.DataFrame(dq),
+        "run": run,
+        "rule_versions": versiones,
+        "riesgo": riesgo,
+        "negocios_mes": negocios_mes,
+        "pares": pares_df,
+        "combinaciones": combos_df,
     }

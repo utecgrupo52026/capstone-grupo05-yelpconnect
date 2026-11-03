@@ -61,21 +61,39 @@ flowchart LR
 | Dashboard web | Angular 22 standalone, ECharts | `E8_dashboard_bi/web/` | 6 páginas que leen solo los JSON |
 | Hosting | Netlify (plan gratuito) | `netlify.toml` | Build y publicación del sitio estático |
 
-**Páginas del dashboard:** Resumen T&S · Reglas · Negocios · Cola de investigación · ML (Reglas vs Modelo) · Gobierno de datos (DQ).
+**Páginas del dashboard:** Resumen T&S · Reglas · Negocios · Cola de investigación · ML (Reglas vs Modelo) · Calidad y versiones (DQ, certificación del run y trazabilidad).
 
 ## 4. Fuentes de datos por pieza
 
 | Tabla | Capa | Consumida por | JSON resultante |
 |---|---|---|---|
 | `yelp_gold.gld_kpi_trust_safety_overview` | Gold | `exportar_gold.py` | `overview.json` |
-| `yelp_gold.gld_kpi_trust_safety_daily` | Gold | `exportar_gold.py` | `monthly.json` (agregado por mes) |
-| `yelp_gold.gld_kpi_trust_safety_rule` | Gold | `exportar_gold.py` | `rules.json` |
-| `yelp_gold.gld_kpi_trust_safety_business` | Gold | `exportar_gold.py` | `businesses.json` (top N) |
+| `yelp_gold.gld_kpi_trust_safety_daily` | Gold | `exportar_gold.py` | `monthly.json` (agregado por mes) y `daily.json` (últimos 90 días) |
+| `yelp_gold.gld_kpi_trust_safety_rule` + `gld_dim_rule` | Gold | `exportar_gold.py` | `rules.json` (con versión, peso y umbral de cada regla) |
+| `yelp_gold.gld_kpi_trust_safety_business` | Gold | `exportar_gold.py` | `businesses.json` (top 50 por reseñas a investigar ∪ top 50 por tasa de señal, mín. 50 reseñas) |
+| `yelp_gold.gld_review_risk` | Gold | `exportar_gold.py` | `business_monthly.json` (36 meses por negocio), `rule_cooccurrence.json` (pares y combinaciones de reglas) y versión del modelo de riesgo |
 | `yelp_gold.gld_investigation_queue` | Gold | `exportar_gold.py` | `queue.json` (top N, enmascarado) |
-| `yelp_gov.dq_resultados` | Gov | `exportar_gold.py` | `dq.json` (última ejecución) |
+| `yelp_gold.gld_dim_evaluation_run` | Gold | `exportar_gold.py` | `meta.json` (`versiones.run`) y certificación en `dq.json` |
+| `yelp_gov.dq_resultados` | Gov | `exportar_gold.py` | `dq.json` (ejecución vigente al iniciar el run + certificación) |
 | `yelp_silver.slv_review_features` | Silver | `ml_anomalias.py` | entrada del modelo |
 | `yelp_silver.slv_review_risk` | Silver | `ml_anomalias.py` | `ml_resumen.json`, `ml_top.json` |
 | — | — | ambos scripts | `meta.json` (fecha de corte, run, modo demo/real) |
+
+### Trazabilidad con la sección 7.1 (preguntas de negocio)
+
+Cada panel del dashboard muestra la etiqueta del requerimiento que responde.
+
+| REQ | Pregunta (resumida) | Página y visual | JSON |
+|---|---|---|---|
+| REQ-01 | Negocios con mayor tasa de señales y su evolución | Negocios: top 15 por tasa, evolución mensual vs. plataforma, ranking | `businesses`, `business_monthly`, `monthly` |
+| REQ-02 | Reseñas evaluadas y % con al menos una señal | Resumen: KPI y volumen por mes/día | `overview`, `monthly`, `daily` |
+| REQ-03 | Casos a investigar y distribución P1/P2/P3 | Resumen: prioridades · Cola de investigación | `overview`, `queue` |
+| REQ-04 | Reglas más frecuentes y cuáles aparecen juntas | Reglas: señales por regla, matriz de co-ocurrencia, combinaciones | `rules`, `rule_cooccurrence` |
+| REQ-05 | Evolución diaria de evaluadas, señal, investigación y score | Resumen: vista «Diario · 90 días» y score promedio | `daily`, `monthly` |
+| REQ-06 | Calidad y cobertura de la corrida | Calidad y versiones: certificación, KPI y reglas DQ del run | `dq`, `overview` |
+| REQ-07 | Versión de regla, pipeline y run de cada KPI | Calidad y versiones: tabla de versiones · Reglas: versión por regla · pie de página | `meta.versiones`, `rules` |
+
+**Certificación (REQ-06).** `exportar_gold.py` toma, por capa, la última ejecución DQ anterior al inicio del run (la que usó el Quality Gate de `04_trust_safety_evaluacion`). Veredicto: *Certificada* si el run terminó en `SUCCESS` y no hay reglas DQ Silver de criticidad alta en rojo; *Con observaciones* si además hay reglas no críticas en rojo; *No certificada* si falla alguna de las dos condiciones; *No verificable* si falta el run o la ejecución DQ. La cobertura de evaluación se informa, pero no bloquea (NOT_EVALUABLE es riesgo aceptado, DQ-SL-012).
 
 > El **dashboard** solo ve datos derivados de gold/gov. El script de ML lee silver porque es una **etapa de producción de datos** (como E7), no un consumidor BI; su resultado se publica en gold.
 
@@ -94,7 +112,7 @@ sequenceDiagram
     Dev->>EXP: python exportar_gold.py
     EXP->>WH: consultas agregadas gold y gov
     WH-->>EXP: filas resumidas
-    EXP->>EXP: escribe meta, overview, monthly, rules, businesses, queue, dq
+    EXP->>EXP: escribe meta, overview, monthly, daily, rules, rule_cooccurrence, businesses, business_monthly, queue, dq
     Dev->>ML: python ml_anomalias.py
     ML->>WH: lee features y risk
     WH-->>ML: features por reseña
@@ -146,7 +164,8 @@ El cuadrante **"Solo ML"** es el aporte: patrones que ninguna regla captura y qu
 | Enmascaramiento: `user_id` hasheado, texto truncado a 200 caracteres | El sitio es público; principio de minimización |
 | Modo demo visible en la UI (banner) | `--demo` permite desarrollar sin Databricks, pero no debe confundirse con datos reales |
 | FinOps: consultas agregadas y top N | Cuota serverless diaria de Free Edition; solo el ML trae features por reseña |
-| `meta.json` con fecha de corte y run | Trazabilidad: qué ejecución del pipeline muestra el dashboard |
+| `meta.json` con fecha de corte, run y versiones | Trazabilidad (REQ-07): qué run, pipeline, modelo de riesgo y versión de cada regla produjo los KPI |
+| Consultas nuevas tolerantes a fallos | Si una consulta de REQ-01/04/06/07 falla, el exportador avisa, borra el JSON anterior y publica el resto: el dashboard muestra «Sin …json» en vez de cifras de otro run |
 | Contrato de datos fijo (`public/data/*.json`) | Desacopla Angular del pipeline: si cambia una tabla, solo cambia el exportador |
 
 ## 8. Cómo ejecutar

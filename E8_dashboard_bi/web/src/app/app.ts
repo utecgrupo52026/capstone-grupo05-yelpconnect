@@ -19,6 +19,6 @@ export class App {
     { ruta: 'negocios', nombre: 'Negocios', grupo: 'Trust & Safety' },
     { ruta: 'cola', nombre: 'Cola de investigación', grupo: 'Trust & Safety' },
     { ruta: 'ml', nombre: 'Reglas vs ML', grupo: 'Machine Learning' },
-    { ruta: 'gobierno', nombre: 'Calidad de datos', grupo: 'Gobierno' },
+    { ruta: 'gobierno', nombre: 'Calidad y versiones', grupo: 'Gobierno' },
   ];
 }
