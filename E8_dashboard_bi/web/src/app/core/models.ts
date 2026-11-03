@@ -30,7 +30,7 @@ export interface Meta {
   generado_en: string;
   evaluation_run_id: string;
   versiones?: Versiones;
-  parametros?: { top_negocios: number; min_resenas_tasa: number; meses_negocio: number; dias_serie: number; top_cola: number };
+  parametros?: { top_negocios: number; min_resenas_tasa: number; dias_serie: number; top_cola: number };
   fuentes: string[];
   nota: string;
 }
@@ -93,14 +93,18 @@ export interface Daily {
   avg_weighted_risk_score: number | null;
 }
 
-/** REQ-01: evolución mensual por negocio. */
-export interface BusinessMonthly {
-  business_id: string;
-  mes: string;
-  reviews_evaluated: number;
-  reviews_with_signal: number;
-  reviews_for_investigation: number;
-  signal_rate_pct: number | null;
+/** REQ-01: evolución anual por negocio, con toda la historia del run. */
+export interface BusinessTrend {
+  granularidad: 'anio';
+  ultimo_mes_datos: string;   // 'YYYY-MM': si no es diciembre, el último año está incompleto
+  filas: {
+    business_id: string;
+    anio: number;
+    reviews_evaluated: number;
+    reviews_with_signal: number;
+    reviews_for_investigation: number;
+    signal_rate_pct: number | null;
+  }[];
 }
 
 /** REQ-04: reglas que se activan en la misma reseña. */

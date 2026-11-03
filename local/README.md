@@ -6,7 +6,7 @@ dashboard (`E8_dashboard_bi/web/public/data/`). Arquitectura completa en
 
 | Script | Qué hace |
 |---|---|
-| `exportar_gold.py` | Lee `yelp_gold` + `yelp_gov` → `meta`, `overview`, `monthly`, `daily`, `rules`, `rule_cooccurrence`, `businesses`, `business_monthly`, `queue`, `dq` (.json). Cada JSON responde a un REQ de la sección 7.1 (ver docstring del script) |
+| `exportar_gold.py` | Lee `yelp_gold` + `yelp_gov` → `meta`, `overview`, `monthly`, `daily`, `rules`, `rule_cooccurrence`, `businesses`, `business_trend`, `queue`, `dq` (.json). Cada JSON responde a un REQ de la sección 7.1 (ver docstring del script) |
 | `ml_anomalias.py` | Isolation Forest sobre `slv_review_features`, compara contra `slv_review_risk` → `ml_resumen`, `ml_top` (.json) |
 
 Ambos aceptan `--demo` (datos sintéticos, sin Databricks) y `--verificar` (revisa tablas y columnas).

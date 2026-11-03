@@ -9,7 +9,7 @@ Gobierno: user_id se seudonimiza y el texto de las reseñas se trunca, porque el
 sitio publicado en Netlify es público.
 
 Qué JSON responde a cada pregunta de la sección 7.1 del Documento Formal:
-  REQ-01  businesses (+ tasa de señal) y business_monthly (evolución por negocio)
+  REQ-01  businesses (+ tasa de señal) y business_trend (evolución anual por negocio)
   REQ-02  overview
   REQ-03  overview (P1/P2/P3) y queue
   REQ-04  rules y rule_cooccurrence (reglas que se activan juntas)
@@ -71,7 +71,6 @@ RUN = (f"(SELECT evaluation_run_id FROM {GOLD}.gld_kpi_trust_safety_overview "
 
 TOP_NEGOCIOS = 50       # REQ-01: top por reseñas a investigar y top por tasa de señal
 MIN_RESENAS_TASA = 50   # REQ-01: volumen mínimo para rankear por tasa (evita 100 % con 2 reseñas)
-MESES_NEGOCIO = 36      # REQ-01: ventana de la evolución mensual por negocio
 DIAS_SERIE = 90         # REQ-05: serie diaria reciente
 TOP_COMBINACIONES = 15  # REQ-04: combinaciones de reglas más frecuentes
 TOP_COLA = 200
@@ -170,17 +169,15 @@ def leer_databricks(conn) -> dict[str, pd.DataFrame | None]:
             WHERE evaluation_run_id = {RUN}
             GROUP BY 1, 2, 3"""),
 
-        # REQ-01: evolución mensual de los negocios exportados (últimos MESES_NEGOCIO meses del run)
-        "negocios_mes": opcional("evolución por negocio", f"""
-            SELECT business_id, date_format(review_date, 'yyyy-MM') AS mes,
+        # REQ-01: evolución ANUAL de los negocios exportados, con toda la historia. Por mes no sirve:
+        # los negocios con mayor tasa tienen pocas reseñas (mediana de 17 en los últimos 36 meses).
+        "negocios_anio": opcional("evolución por negocio", f"""
+            SELECT business_id, year(review_date) AS anio,
                    count(*) AS reviews_evaluated,
                    sum(CASE WHEN signal_count > 0 THEN 1 ELSE 0 END) AS reviews_with_signal,
                    sum(CASE WHEN requires_investigation THEN 1 ELSE 0 END) AS reviews_for_investigation
             FROM {GOLD}.gld_review_risk
-            WHERE evaluation_run_id = {RUN}
-              AND business_id IN ({NEGOCIOS})
-              AND review_date >= add_months(trunc((SELECT max(review_date) FROM {GOLD}.gld_review_risk
-                                                   WHERE evaluation_run_id = {RUN}), 'MM'), -{MESES_NEGOCIO - 1})
+            WHERE evaluation_run_id = {RUN} AND business_id IN ({NEGOCIOS})
             GROUP BY 1, 2"""),
 
         # REQ-04: qué reglas se activan juntas (pares, con la diagonal = señales de cada regla)
@@ -251,18 +248,22 @@ def a_diario(daily: pd.DataFrame, dias: int = DIAS_SERIE) -> pd.DataFrame:
     return d[["dia", *conteos, "signal_rate_pct", "investigation_rate_pct", "avg_weighted_risk_score"]]
 
 
-def a_negocios_mes(nm: pd.DataFrame | None, ultimo_mes: str, meses: int = MESES_NEGOCIO) -> pd.DataFrame | None:
-    """REQ-01: una fila por negocio y mes, con los meses sin reseñas en cero (mismo eje para todos)."""
-    if nm is None or nm.empty:
+def a_negocios_anio(na: pd.DataFrame | None, mensual: pd.DataFrame) -> dict | None:
+    """REQ-01: una fila por negocio y año de la plataforma, con los años sin reseñas en cero.
+
+    Todos los negocios comparten el eje de años de monthly.json; el último año puede estar incompleto.
+    """
+    if na is None or na.empty:
         return None
-    todos = [str(p) for p in pd.period_range(end=pd.Period(ultimo_mes, "M"), periods=meses, freq="M")]
-    idx = pd.MultiIndex.from_product([sorted(nm["business_id"].unique()), todos], names=["business_id", "mes"])
+    meses = mensual["mes"].astype(str)
+    anios = list(range(int(meses.min()[:4]), int(meses.max()[:4]) + 1))
+    idx = pd.MultiIndex.from_product([sorted(na["business_id"].unique()), anios], names=["business_id", "anio"])
     cols = ["reviews_evaluated", "reviews_with_signal", "reviews_for_investigation"]
-    d = (nm.assign(mes=nm["mes"].astype(str))
-           .groupby(["business_id", "mes"])[cols].sum()
+    d = (na.assign(anio=na["anio"].astype(int))
+           .groupby(["business_id", "anio"])[cols].sum()
            .reindex(idx, fill_value=0).astype(int).reset_index())
-    d = _tasas(d)
-    return d.drop(columns="investigation_rate_pct")
+    d = _tasas(d).drop(columns="investigation_rate_pct")
+    return {"granularidad": "anio", "ultimo_mes_datos": meses.max(), "filas": salida.registros(d)}
 
 
 def coocurrencia(pares: pd.DataFrame | None, combos: pd.DataFrame | None, reglas: list[str],
@@ -424,7 +425,7 @@ def publicar(datos: dict[str, pd.DataFrame | None], modo: str) -> None:
         "evaluation_run_id": ov.get("evaluation_run_id"),
         "versiones": versiones,
         "parametros": {"top_negocios": TOP_NEGOCIOS, "min_resenas_tasa": MIN_RESENAS_TASA,
-                       "meses_negocio": MESES_NEGOCIO, "dias_serie": DIAS_SERIE, "top_cola": TOP_COLA},
+                       "granularidad_negocio": "anio", "dias_serie": DIAS_SERIE, "top_cola": TOP_COLA},
         "fuentes": sorted(ESPERADO),
         "nota": "Señales heurísticas y candidatos a investigación. NO representan fraude confirmado.",
     })
@@ -433,8 +434,7 @@ def publicar(datos: dict[str, pd.DataFrame | None], modo: str) -> None:
     salida.escribir("daily", a_diario(datos["daily"]))
     salida.escribir("rules", reglas)
     salida.escribir("businesses", datos["businesses"])
-    salida.escribir_o_quitar("business_monthly",
-                             a_negocios_mes(datos.get("negocios_mes"), mensual["mes"].max()), compacto=True)
+    salida.escribir_o_quitar("business_trend", a_negocios_anio(datos.get("negocios_anio"), mensual), compacto=True)
     salida.escribir_o_quitar("rule_cooccurrence",
                              coocurrencia(datos.get("pares"), datos.get("combinaciones"),
                                           list(reglas["rule_id"]), ov.get("reviews_with_signal") or 0))

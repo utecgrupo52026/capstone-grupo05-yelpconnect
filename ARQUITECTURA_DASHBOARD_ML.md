@@ -71,7 +71,7 @@ flowchart LR
 | `yelp_gold.gld_kpi_trust_safety_daily` | Gold | `exportar_gold.py` | `monthly.json` (agregado por mes) y `daily.json` (últimos 90 días) |
 | `yelp_gold.gld_kpi_trust_safety_rule` + `gld_dim_rule` | Gold | `exportar_gold.py` | `rules.json` (con versión, peso y umbral de cada regla) |
 | `yelp_gold.gld_kpi_trust_safety_business` | Gold | `exportar_gold.py` | `businesses.json` (top 50 por reseñas a investigar ∪ top 50 por tasa de señal, mín. 50 reseñas) |
-| `yelp_gold.gld_review_risk` | Gold | `exportar_gold.py` | `business_monthly.json` (36 meses por negocio), `rule_cooccurrence.json` (pares y combinaciones de reglas) y versión del modelo de riesgo |
+| `yelp_gold.gld_review_risk` | Gold | `exportar_gold.py` | `business_trend.json` (evolución anual por negocio, toda la historia), `rule_cooccurrence.json` (pares y combinaciones de reglas) y versión del modelo de riesgo |
 | `yelp_gold.gld_investigation_queue` | Gold | `exportar_gold.py` | `queue.json` (top N, enmascarado) |
 | `yelp_gold.gld_dim_evaluation_run` | Gold | `exportar_gold.py` | `meta.json` (`versiones.run`) y certificación en `dq.json` |
 | `yelp_gov.dq_resultados` | Gov | `exportar_gold.py` | `dq.json` (ejecución vigente al iniciar el run + certificación) |
@@ -85,7 +85,7 @@ Cada panel del dashboard muestra la etiqueta del requerimiento que responde.
 
 | REQ | Pregunta (resumida) | Página y visual | JSON |
 |---|---|---|---|
-| REQ-01 | Negocios con mayor tasa de señales y su evolución | Negocios: top 15 por tasa, evolución mensual vs. plataforma, ranking | `businesses`, `business_monthly`, `monthly` |
+| REQ-01 | Negocios con mayor tasa de señales y su evolución | Negocios: top 15 por tasa, evolución anual vs. plataforma, ranking | `businesses`, `business_trend`, `monthly` |
 | REQ-02 | Reseñas evaluadas y % con al menos una señal | Resumen: KPI y volumen por mes/día | `overview`, `monthly`, `daily` |
 | REQ-03 | Casos a investigar y distribución P1/P2/P3 | Resumen: prioridades · Cola de investigación | `overview`, `queue` |
 | REQ-04 | Reglas más frecuentes y cuáles aparecen juntas | Reglas: señales por regla, matriz de co-ocurrencia, combinaciones | `rules`, `rule_cooccurrence` |
@@ -112,7 +112,7 @@ sequenceDiagram
     Dev->>EXP: python exportar_gold.py
     EXP->>WH: consultas agregadas gold y gov
     WH-->>EXP: filas resumidas
-    EXP->>EXP: escribe meta, overview, monthly, daily, rules, rule_cooccurrence, businesses, business_monthly, queue, dq
+    EXP->>EXP: escribe meta, overview, monthly, daily, rules, rule_cooccurrence, businesses, business_trend, queue, dq
     Dev->>ML: python ml_anomalias.py
     ML->>WH: lee features y risk
     WH-->>ML: features por reseña

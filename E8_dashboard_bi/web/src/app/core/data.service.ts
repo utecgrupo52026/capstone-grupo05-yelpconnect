@@ -3,7 +3,7 @@ import { Injectable, Signal, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable, catchError, of, shareReplay } from 'rxjs';
 import {
-  BusinessKpi, BusinessMonthly, Coocurrencia, Daily, Dq, Meta, MlResumen, MlTop, Monthly, Overview, QueueItem,
+  BusinessKpi, BusinessTrend, Coocurrencia, Daily, Dq, Meta, MlResumen, MlTop, Monthly, Overview, QueueItem,
   RuleKpi,
 } from './models';
 
@@ -36,7 +36,7 @@ export class DataService {
   rules = () => this.cargar<RuleKpi[]>('rules');
   cooccurrence = () => this.cargar<Coocurrencia>('rule_cooccurrence');
   businesses = () => this.cargar<BusinessKpi[]>('businesses');
-  businessMonthly = () => this.cargar<BusinessMonthly[]>('business_monthly');
+  businessTrend = () => this.cargar<BusinessTrend>('business_trend');
   queue = () => this.cargar<QueueItem[]>('queue');
   dq = () => this.cargar<Dq>('dq');
   mlResumen = () => this.cargar<MlResumen>('ml_resumen');

@@ -151,11 +151,9 @@ def datos_gold_demo() -> dict[str, pd.DataFrame]:
                        "pct_cumplimiento": round(pct, 2), "umbral_pct": umbral, "paso": pct >= umbral,
                        "ejecucion_ts": ts})
 
-    # REQ-01: evolución mensual por negocio (misma ventana que la consulta real)
-    f["mes"] = pd.to_datetime(f["review_date"]).dt.strftime("%Y-%m")
-    desde = str(pd.Period(f["mes"].max(), "M") - 35)
-    negocios_mes = (f[f["mes"] >= desde]
-                    .groupby(["business_id", "mes"], as_index=False)
+    # REQ-01: evolución anual por negocio (toda la historia, como la consulta real)
+    f["anio"] = pd.to_datetime(f["review_date"]).dt.year
+    negocios_anio = (f.groupby(["business_id", "anio"], as_index=False)
                     .agg(reviews_evaluated=("review_id", "size"),
                          reviews_with_signal=("con_senal", "sum"),
                          reviews_for_investigation=("requires_investigation", "sum")))
@@ -197,7 +195,7 @@ def datos_gold_demo() -> dict[str, pd.DataFrame]:
         "run": run,
         "rule_versions": versiones,
         "riesgo": riesgo,
-        "negocios_mes": negocios_mes,
+        "negocios_anio": negocios_anio,
         "pares": pares_df,
         "combinaciones": combos_df,
     }

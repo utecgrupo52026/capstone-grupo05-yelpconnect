@@ -10,6 +10,9 @@ type Columna = keyof Pick<BusinessKpi, 'reviews_evaluated' | 'reviews_with_signa
   | 'reviews_for_investigation' | 'investigation_rate_pct' | 'priority_p1' | 'avg_weighted_risk_score'>;
 type Metrica = 'investigacion' | 'tasa';
 
+/** Por debajo de este volumen anual, la tasa de un año es poco confiable. */
+const MIN_RESENAS_ANIO = 10;
+
 @Component({
   selector: 'app-negocios',
   imports: [Chart, Panel, SinDatos],
@@ -41,11 +44,11 @@ type Metrica = 'investigacion' | 'tasa';
             }
           </app-panel>
 
-          <app-panel [titulo]="'Evolución mensual · ' + (actual()?.business_name ?? '—')" req="REQ-01"
+          <app-panel [titulo]="'Evolución anual · ' + (actual()?.business_name ?? '—')" req="REQ-01"
                      stakeholder="Rafael Nakamura (T&S) · ¿la señal del negocio sube o baja?">
-            @if (mensual() === null) {
-              <app-sin-datos mensaje="Sin business_monthly.json: vuelve a ejecutar local/exportar_gold.py para ver la evolución por negocio." />
-            } @else if (serieNegocio().length) {
+            @if (tendencia() === null) {
+              <app-sin-datos mensaje="Sin business_trend.json: vuelve a ejecutar local/exportar_gold.py para ver la evolución por negocio." />
+            } @else if (tendencia()) {
               <div class="filtros">
                 <label class="nota" style="margin:0" for="negocio">Negocio:</label>
                 <select id="negocio" (change)="seleccionar($any($event.target).value)">
@@ -54,17 +57,24 @@ type Metrica = 'investigacion' | 'tasa';
                   }
                 </select>
               </div>
-              @if (variacion(); as v) {
-                <p class="resumen-mes">
-                  <strong>{{ v.mes }}:</strong> {{ pct(v.tasa) }} con señal ({{ num(v.senal) }} de {{ num(v.evaluadas) }})
-                  · <strong>{{ pp(v.delta) }}</strong> vs. {{ v.mesAnterior }}
+              @if (serieNegocio().length) {
+                @if (variacion(); as v) {
+                  <p class="resumen-mes">
+                    <strong>{{ v.anio }}:</strong> {{ pct(v.tasa) }} con señal ({{ num(v.senal) }} de {{ num(v.evaluadas) }})
+                    · <strong>{{ pp(v.delta) }}</strong> vs. {{ v.anioAnterior }}
+                  </p>
+                }
+                <app-chart [opciones]="optEvolucion()" [alto]="300" descripcion="Tasa anual de señal del negocio frente a la plataforma" />
+                <p class="nota">
+                  Los puntos huecos son años con menos de {{ minAnio }} reseñas: su tasa es poco confiable. La comparación
+                  de arriba usa solo años con al menos {{ minAnio }} reseñas.
+                  @if (anioParcial(); as a) { {{ a }}* está incompleto (los datos terminan en {{ ultimoMes() }}). }
                 </p>
+              } @else {
+                <app-sin-datos mensaje="El negocio no tiene reseñas en el run." />
               }
-              <app-chart [opciones]="optEvolucion()" [alto]="300" descripcion="Tasa mensual de señal del negocio frente a la plataforma" />
-              <p class="nota">Últimos {{ serieNegocio().length }} meses del run. El último mes puede estar incompleto:
-                compara tasas, no volúmenes.</p>
             } @else {
-              <app-sin-datos mensaje="El negocio no tiene reseñas en la ventana exportada." />
+              <app-sin-datos />
             }
           </app-panel>
         </div>
@@ -99,7 +109,7 @@ type Metrica = 'investigacion' | 'tasa';
               </tbody>
             </table>
           </div>
-          <p class="nota">Clic en un negocio para ver su evolución mensual.
+          <p class="nota">Clic en un negocio para ver su evolución anual.
             @if (topN(); as n) { La tabla une el top {{ n }} por reseñas a investigar y el top {{ n }} por tasa de señal. }
           </p>
         </app-panel>
@@ -113,10 +123,11 @@ type Metrica = 'investigacion' | 'tasa';
 export class Negocios {
   private readonly data = inject(DataService);
   protected readonly negocios = this.data.businesses();
-  protected readonly mensual = this.data.businessMonthly();
+  protected readonly tendencia = this.data.businessTrend();
   private readonly plataforma = this.data.monthly();
   private readonly meta = this.data.meta();
   protected readonly num = num; protected readonly pct = pct; protected readonly dec = dec; protected readonly pp = pp;
+  protected readonly minAnio = MIN_RESENAS_ANIO;
 
   protected readonly minResenas = computed(() => this.meta()?.parametros?.min_resenas_tasa ?? 50);
   protected readonly topN = computed(() => this.meta()?.parametros?.top_negocios ?? null);
@@ -158,25 +169,50 @@ export class Negocios {
     return ns.find((n) => n.business_id === this.seleccionado()) ?? this.ordenados()[0] ?? null;
   });
 
-  protected readonly serieNegocio = computed(() => {
-    const id = this.actual()?.business_id;
-    return (this.mensual() ?? []).filter((m) => m.business_id === id).sort((a, b) => a.mes.localeCompare(b.mes));
+  protected readonly ultimoMes = computed(() => this.tendencia()?.ultimo_mes_datos ?? null);
+  /** Año del último mes con datos si no llega a diciembre (p. ej. 2022 con solo enero). */
+  protected readonly anioParcial = computed(() => {
+    const u = this.ultimoMes();
+    return u && !u.endsWith('-12') ? Number(u.slice(0, 4)) : null;
   });
 
-  /** Último mes con reseñas frente al mes anterior con reseñas. */
+  /** Años del negocio desde su primera reseña (antes no existía en Yelp o no tenía actividad). */
+  protected readonly serieNegocio = computed(() => {
+    const id = this.actual()?.business_id;
+    const filas = (this.tendencia()?.filas ?? []).filter((f) => f.business_id === id).sort((a, b) => a.anio - b.anio);
+    const desde = filas.findIndex((f) => f.reviews_evaluated > 0);
+    return desde < 0 ? [] : filas.slice(desde);
+  });
+
+  /** Tasa anual de la plataforma, a partir de monthly.json. */
+  private readonly plataformaAnual = computed(() => {
+    const acc = new Map<number, { n: number; s: number }>();
+    for (const m of this.plataforma() ?? []) {
+      const a = Number(m.mes.slice(0, 4));
+      const x = acc.get(a) ?? { n: 0, s: 0 };
+      x.n += m.reviews_evaluated; x.s += m.reviews_with_signal;
+      acc.set(a, x);
+    }
+    return new Map([...acc].map(([a, x]) => [a, x.n ? Math.round((10000 * x.s) / x.n) / 100 : null]));
+  });
+
+  /** Último año completo con volumen suficiente frente al anterior con volumen suficiente. */
   protected readonly variacion = computed(() => {
-    const conDatos = this.serieNegocio().filter((m) => m.reviews_evaluated > 0);
+    const parcial = this.anioParcial();
+    const conDatos = this.serieNegocio().filter((f) => f.reviews_evaluated >= MIN_RESENAS_ANIO && f.anio !== parcial);
     if (conDatos.length < 2) return null;
     const [ant, ult] = conDatos.slice(-2);
     return {
-      mes: ult.mes, mesAnterior: ant.mes, tasa: ult.signal_rate_pct, senal: ult.reviews_with_signal,
+      anio: ult.anio, anioAnterior: ant.anio, tasa: ult.signal_rate_pct, senal: ult.reviews_with_signal,
       evaluadas: ult.reviews_evaluated, delta: (ult.signal_rate_pct ?? 0) - (ant.signal_rate_pct ?? 0),
     };
   });
 
   protected readonly optEvolucion = computed(() => {
     const t = tema(); const b = base(t); const s = this.serieNegocio();
-    const global = new Map((this.plataforma() ?? []).map((m) => [m.mes, m.signal_rate_pct]));
+    const global = this.plataformaAnual();
+    const parcial = this.anioParcial();
+    const etiqueta = (a: number) => (a === parcial ? `${a}*` : String(a));
     const nombre = this.actual()?.business_name ?? 'Negocio';
     return {
       ...b, color: [t.serie[0], t.tenue],
@@ -184,17 +220,26 @@ export class Negocios {
       tooltip: {
         ...b.tooltip, trigger: 'axis',
         formatter: (ps: { dataIndex: number }[]) => {
-          const m = s[ps[0].dataIndex];
-          return `<b>${esc(m.mes)}</b><br>${esc(nombre)}: ${pct(m.signal_rate_pct)} (${num(m.reviews_with_signal)} de ${num(m.reviews_evaluated)})`
-            + `<br>A investigar: ${num(m.reviews_for_investigation)}<br>Plataforma: ${pct(global.get(m.mes))}`;
+          const f = s[ps[0].dataIndex];
+          const aviso = f.reviews_evaluated < MIN_RESENAS_ANIO ? '<br><i>Pocas reseñas: tasa poco confiable</i>' : '';
+          return `<b>${etiqueta(f.anio)}</b><br>${esc(nombre)}: ${pct(f.signal_rate_pct)} (${num(f.reviews_with_signal)} de ${num(f.reviews_evaluated)})`
+            + `<br>A investigar: ${num(f.reviews_for_investigation)}<br>Plataforma: ${pct(global.get(f.anio))}${aviso}`;
         },
       },
-      xAxis: { type: 'category', data: s.map((m) => m.mes), ...b.eje, splitLine: { show: false } },
+      xAxis: { type: 'category', data: s.map((f) => etiqueta(f.anio)), ...b.eje, splitLine: { show: false } },
       yAxis: { type: 'value', ...b.eje, axisLabel: { ...b.eje.axisLabel, formatter: '{value} %' } },
       series: [
-        { name: nombre, type: 'line', data: s.map((m) => m.signal_rate_pct), connectNulls: false, symbolSize: 6,
-          lineStyle: { width: 2 }, itemStyle: { color: t.serie[0] }, emphasis: { focus: 'series' } },
-        { name: 'Plataforma', type: 'line', data: s.map((m) => global.get(m.mes) ?? null), showSymbol: false,
+        {
+          name: nombre, type: 'line', connectNulls: false, symbol: 'circle', symbolSize: 8, lineStyle: { width: 2 },
+          itemStyle: { color: t.serie[0] },
+          emphasis: { focus: 'series' },
+          // Años con pocas reseñas: punto hueco (la forma, no solo el color, marca la diferencia)
+          data: s.map((f) => ({
+            value: f.signal_rate_pct,
+            itemStyle: f.reviews_evaluated < MIN_RESENAS_ANIO ? { color: t.superficie, borderColor: t.serie[0], borderWidth: 2 } : undefined,
+          })),
+        },
+        { name: 'Plataforma', type: 'line', data: s.map((f) => global.get(f.anio) ?? null), showSymbol: false,
           lineStyle: { width: 1.5, type: 'dashed' }, itemStyle: { color: t.tenue } },
       ],
     };
