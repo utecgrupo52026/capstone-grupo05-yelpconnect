@@ -1,0 +1,185 @@
+{
+ "reglas": [
+  "R001",
+  "R002",
+  "R003",
+  "R004",
+  "R005",
+  "R006"
+ ],
+ "reviews_con_senal": 27233,
+ "senales_por_regla": {
+  "R001": 170,
+  "R002": 13986,
+  "R003": 44,
+  "R004": 12890,
+  "R005": 425,
+  "R006": 23
+ },
+ "pares": [
+  {
+   "regla_a": "R002",
+   "regla_b": "R004",
+   "reviews": 206,
+   "pct_de_a": 1.47,
+   "pct_de_b": 1.6,
+   "jaccard": 0.0077
+  },
+  {
+   "regla_a": "R001",
+   "regla_b": "R004",
+   "reviews": 46,
+   "pct_de_a": 27.06,
+   "pct_de_b": 0.36,
+   "jaccard": 0.0035
+  },
+  {
+   "regla_a": "R002",
+   "regla_b": "R005",
+   "reviews": 32,
+   "pct_de_a": 0.23,
+   "pct_de_b": 7.53,
+   "jaccard": 0.0022
+  },
+  {
+   "regla_a": "R004",
+   "regla_b": "R005",
+   "reviews": 7,
+   "pct_de_a": 0.05,
+   "pct_de_b": 1.65,
+   "jaccard": 0.0005
+  },
+  {
+   "regla_a": "R003",
+   "regla_b": "R005",
+   "reviews": 6,
+   "pct_de_a": 13.64,
+   "pct_de_b": 1.41,
+   "jaccard": 0.013
+  },
+  {
+   "regla_a": "R003",
+   "regla_b": "R004",
+   "reviews": 5,
+   "pct_de_a": 11.36,
+   "pct_de_b": 0.04,
+   "jaccard": 0.0004
+  },
+  {
+   "regla_a": "R002",
+   "regla_b": "R003",
+   "reviews": 3,
+   "pct_de_a": 0.02,
+   "pct_de_b": 6.82,
+   "jaccard": 0.0002
+  },
+  {
+   "regla_a": "R001",
+   "regla_b": "R002",
+   "reviews": 2,
+   "pct_de_a": 1.18,
+   "pct_de_b": 0.01,
+   "jaccard": 0.0001
+  },
+  {
+   "regla_a": "R004",
+   "regla_b": "R006",
+   "reviews": 1,
+   "pct_de_a": 0.01,
+   "pct_de_b": 4.35,
+   "jaccard": 0.0001
+  }
+ ],
+ "combinaciones": [
+  {
+   "combinacion": "R002",
+   "n_reglas": 1,
+   "reviews": 13746,
+   "reviews_for_investigation": 0
+  },
+  {
+   "combinacion": "R004",
+   "n_reglas": 1,
+   "reviews": 12628,
+   "reviews_for_investigation": 0
+  },
+  {
+   "combinacion": "R005",
+   "n_reglas": 1,
+   "reviews": 380,
+   "reviews_for_investigation": 0
+  },
+  {
+   "combinacion": "R002 + R004",
+   "n_reglas": 2,
+   "reviews": 203,
+   "reviews_for_investigation": 203
+  },
+  {
+   "combinacion": "R001",
+   "n_reglas": 1,
+   "reviews": 123,
+   "reviews_for_investigation": 0
+  },
+  {
+   "combinacion": "R001 + R004",
+   "n_reglas": 2,
+   "reviews": 45,
+   "reviews_for_investigation": 45
+  },
+  {
+   "combinacion": "R002 + R005",
+   "n_reglas": 2,
+   "reviews": 32,
+   "reviews_for_investigation": 32
+  },
+  {
+   "combinacion": "R003",
+   "n_reglas": 1,
+   "reviews": 32,
+   "reviews_for_investigation": 0
+  },
+  {
+   "combinacion": "R006",
+   "n_reglas": 1,
+   "reviews": 22,
+   "reviews_for_investigation": 0
+  },
+  {
+   "combinacion": "R004 + R005",
+   "n_reglas": 2,
+   "reviews": 7,
+   "reviews_for_investigation": 7
+  },
+  {
+   "combinacion": "R003 + R005",
+   "n_reglas": 2,
+   "reviews": 6,
+   "reviews_for_investigation": 6
+  },
+  {
+   "combinacion": "R003 + R004",
+   "n_reglas": 2,
+   "reviews": 3,
+   "reviews_for_investigation": 3
+  },
+  {
+   "combinacion": "R002 + R003 + R004",
+   "n_reglas": 3,
+   "reviews": 2,
+   "reviews_for_investigation": 2
+  },
+  {
+   "combinacion": "R001 + R002 + R004",
+   "n_reglas": 3,
+   "reviews": 1,
+   "reviews_for_investigation": 1
+  },
+  {
+   "combinacion": "R001 + R002",
+   "n_reglas": 2,
+   "reviews": 1,
+   "reviews_for_investigation": 1
+  }
+ ]
+}

@@ -1,13 +1,94 @@
 {
  "modo": "databricks",
- "generado_en": "2026-10-15T23:17:42+00:00",
+ "generado_en": "2026-11-03T22:33:25+00:00",
  "evaluation_run_id": "6c95bbfe-aa13-4a07-bc28-9f50aad51fdb",
+ "versiones": {
+  "run": {
+   "evaluation_run_id": "6c95bbfe-aa13-4a07-bc28-9f50aad51fdb",
+   "pipeline_name": "03_trust_safety_evaluacion",
+   "pipeline_version": "3.0.0",
+   "dataset_version": "a564201d-9302-49f3-9b00-7d28a4e4776a",
+   "started_at": "2026-10-09T03:08:46.828412+00:00",
+   "finished_at": "2026-10-09T03:09:07.931853+00:00",
+   "execution_status": "SUCCESS"
+  },
+  "riesgo": [
+   {
+    "risk_model_version": "1.0.0",
+    "feature_execution_id": "a564201d-9302-49f3-9b00-7d28a4e4776a",
+    "risk_consolidation_id": "c509d184-049a-4e89-abc5-4c62243ea857",
+    "reviews": 400000
+   }
+  ],
+  "reglas": [
+   {
+    "rule_id": "R001",
+    "rule_version_id": "R001-v1.0",
+    "rule_version": "1.0",
+    "rule_status": "ACTIVE"
+   },
+   {
+    "rule_id": "R002",
+    "rule_version_id": "R002-v1.0",
+    "rule_version": "1.0",
+    "rule_status": "ACTIVE"
+   },
+   {
+    "rule_id": "R003",
+    "rule_version_id": "R003-v1.0",
+    "rule_version": "1.0",
+    "rule_status": "ACTIVE"
+   },
+   {
+    "rule_id": "R004",
+    "rule_version_id": "R004-v1.0",
+    "rule_version": "1.0",
+    "rule_status": "ACTIVE"
+   },
+   {
+    "rule_id": "R005",
+    "rule_version_id": "R005-v1.0",
+    "rule_version": "1.0",
+    "rule_status": "ACTIVE"
+   },
+   {
+    "rule_id": "R006",
+    "rule_version_id": "R006-v1.0",
+    "rule_version": "1.0",
+    "rule_status": "ACTIVE"
+   }
+  ],
+  "dq": [
+   {
+    "capa": "bronze",
+    "ejecucion_id": "57a8bab2-1406-4a33-bd25-89df58d0a5c8",
+    "ejecucion_ts": "2026-10-09T03:05:34.577645+00:00",
+    "reglas": 22
+   },
+   {
+    "capa": "silver",
+    "ejecucion_id": "056d7fab-20f0-4455-9206-be4aed2952c7",
+    "ejecucion_ts": "2026-10-09T03:07:23.265384+00:00",
+    "reglas": 22
+   }
+  ]
+ },
+ "parametros": {
+  "top_negocios": 50,
+  "min_resenas_tasa": 50,
+  "granularidad_negocio": "anio",
+  "dias_serie": 90,
+  "top_cola": 200
+ },
  "fuentes": [
+  "workspace.yelp_gold.gld_dim_evaluation_run",
+  "workspace.yelp_gold.gld_dim_rule",
   "workspace.yelp_gold.gld_investigation_queue",
   "workspace.yelp_gold.gld_kpi_trust_safety_business",
   "workspace.yelp_gold.gld_kpi_trust_safety_daily",
   "workspace.yelp_gold.gld_kpi_trust_safety_overview",
   "workspace.yelp_gold.gld_kpi_trust_safety_rule",
+  "workspace.yelp_gold.gld_review_risk",
   "workspace.yelp_gov.dq_reglas",
   "workspace.yelp_gov.dq_resultados"
  ],

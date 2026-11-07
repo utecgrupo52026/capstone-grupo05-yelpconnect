@@ -1,5 +1,20 @@
 {
  "ultima_ejecucion": "2026-10-09T03:07:23.265384+00:00",
+ "vinculo": "run",
+ "ejecuciones": [
+  {
+   "capa": "bronze",
+   "ejecucion_id": "57a8bab2-1406-4a33-bd25-89df58d0a5c8",
+   "ejecucion_ts": "2026-10-09T03:05:34.577645+00:00",
+   "reglas": 22
+  },
+  {
+   "capa": "silver",
+   "ejecucion_id": "056d7fab-20f0-4455-9206-be4aed2952c7",
+   "ejecucion_ts": "2026-10-09T03:07:23.265384+00:00",
+   "reglas": 22
+  }
+ ],
  "total_reglas": 44,
  "reglas_ok": 44,
  "reglas_en_rojo": 0,
@@ -693,5 +708,36 @@
    "umbral_pct": 100.0,
    "paso": true
   }
- ]
+ ],
+ "certificacion": {
+  "veredicto": "CERTIFICADA",
+  "criterio": "Certificada: el run terminó en SUCCESS y la ejecución DQ Silver vigente al iniciarlo no tiene reglas de criticidad alta en rojo (el mismo Quality Gate de 04_trust_safety_evaluacion). Con observaciones: además hay reglas DQ no críticas en rojo. La cobertura de evaluación se informa, pero no bloquea: NOT_EVALUABLE es un riesgo aceptado (DQ-SL-012).",
+  "cobertura_evaluacion_pct": 93.31,
+  "chequeos": [
+   {
+    "id": "run",
+    "nombre": "Run de evaluación finalizado",
+    "estado": "ok",
+    "detalle": "execution_status = SUCCESS"
+   },
+   {
+    "id": "quality_gate",
+    "nombre": "Quality Gate Silver (criticidad alta)",
+    "estado": "ok",
+    "detalle": "0 reglas de criticidad alta en rojo en la ejecución 056d7fab-20f0-4455-9206-be4aed2952c7"
+   },
+   {
+    "id": "dq_rojo",
+    "nombre": "Otras reglas DQ en rojo",
+    "estado": "ok",
+    "detalle": "Ninguna"
+   },
+   {
+    "id": "cobertura",
+    "nombre": "Cobertura de evaluación de reglas",
+    "estado": "info",
+    "detalle": "93.31 % de las reseñas con todas las reglas evaluables; 26,744 con evaluación incompleta (NOT_EVALUABLE)"
+   }
+  ]
+ }
 }
