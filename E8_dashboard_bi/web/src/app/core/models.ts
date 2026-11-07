@@ -1,9 +1,36 @@
 // Contrato de datos: JSON generados por local/exportar_gold.py y local/ml_anomalias.py
 
+export interface RunInfo {
+  evaluation_run_id: string;
+  pipeline_name: string | null;
+  pipeline_version: string | null;
+  dataset_version: string | null;   // feature_execution_id que alimentó el run
+  started_at: string | null;
+  finished_at: string | null;
+  execution_status: string | null;
+}
+
+export interface DqEjecucion {
+  capa: string;
+  ejecucion_id: string;
+  ejecucion_ts: string;
+  reglas: number;
+}
+
+/** REQ-07: qué versión de regla, pipeline, modelo y run produjo los KPI. */
+export interface Versiones {
+  run: RunInfo | null;
+  riesgo: { risk_model_version: string | null; feature_execution_id: string | null; risk_consolidation_id: string | null; reviews: number }[];
+  reglas: { rule_id: string; rule_version_id?: string | null; rule_version?: string | null; rule_status?: string | null }[];
+  dq: DqEjecucion[];
+}
+
 export interface Meta {
   modo: 'demo' | 'databricks';
   generado_en: string;
   evaluation_run_id: string;
+  versiones?: Versiones;
+  parametros?: { top_negocios: number; min_resenas_tasa: number; dias_serie: number; top_cola: number };
   fuentes: string[];
   nota: string;
 }
@@ -44,6 +71,49 @@ export interface RuleKpi {
   not_evaluable: number;
   signal_rate_pct: number;
   evaluation_coverage_pct: number;
+  // REQ-07 (los snapshots anteriores no los traen)
+  rule_version_id?: string | null;
+  rule_version?: string | null;
+  threshold?: number | null;
+  weight?: number | null;
+  rule_status?: string | null;
+  valid_from?: string | null;
+}
+
+/** REQ-05: serie diaria reciente. */
+export interface Daily {
+  dia: string;
+  reviews_evaluated: number;
+  reviews_with_signal: number;
+  reviews_for_investigation: number;
+  priority_p1: number;
+  priority_p2: number;
+  signal_rate_pct: number | null;
+  investigation_rate_pct: number | null;
+  avg_weighted_risk_score: number | null;
+}
+
+/** REQ-01: evolución anual por negocio, con toda la historia del run. */
+export interface BusinessTrend {
+  granularidad: 'anio';
+  ultimo_mes_datos: string;   // 'YYYY-MM': si no es diciembre, el último año está incompleto
+  filas: {
+    business_id: string;
+    anio: number;
+    reviews_evaluated: number;
+    reviews_with_signal: number;
+    reviews_for_investigation: number;
+    signal_rate_pct: number | null;
+  }[];
+}
+
+/** REQ-04: reglas que se activan en la misma reseña. */
+export interface Coocurrencia {
+  reglas: string[];
+  reviews_con_senal: number;
+  senales_por_regla: Record<string, number>;
+  pares: { regla_a: string; regla_b: string; reviews: number; pct_de_a: number; pct_de_b: number; jaccard: number }[];
+  combinaciones: { combinacion: string; n_reglas: number; reviews: number; reviews_for_investigation: number }[];
 }
 
 export interface BusinessKpi {
@@ -92,8 +162,21 @@ export interface DqRegla {
   paso: boolean;
 }
 
+export type EstadoChequeo = 'ok' | 'alerta' | 'falla' | 'info' | 'sin_datos';
+
+/** REQ-06: ¿la corrida puede considerarse certificada? */
+export interface Certificacion {
+  veredicto: 'CERTIFICADA' | 'CON_OBSERVACIONES' | 'NO_CERTIFICADA' | 'NO_VERIFICABLE';
+  criterio: string;
+  cobertura_evaluacion_pct: number | null;
+  chequeos: { id: string; nombre: string; estado: EstadoChequeo; detalle: string }[];
+}
+
 export interface Dq {
   ultima_ejecucion: string | null;
+  vinculo?: 'run' | 'ultima_ejecucion';
+  ejecuciones?: DqEjecucion[];
+  certificacion?: Certificacion;
   total_reglas: number;
   reglas_ok: number;
   reglas_en_rojo: number;

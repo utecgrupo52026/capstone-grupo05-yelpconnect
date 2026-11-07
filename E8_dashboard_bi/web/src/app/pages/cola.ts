@@ -18,7 +18,7 @@ const PAGINA = 50;
            y el texto se trunca a 200 caracteres porque este sitio es público.</p>
       </div>
 
-      <app-panel titulo="Reseñas candidatas a revisión" stakeholder="Trust & Safety · analistas de moderación">
+      <app-panel titulo="Reseñas candidatas a revisión" req="REQ-03" stakeholder="Rafael Nakamura (T&S) · orden de revisión de los analistas">
         <div class="filtros">
           <div class="segmentado" role="group" aria-label="Prioridad">
             @for (f of filtros; track f) {
